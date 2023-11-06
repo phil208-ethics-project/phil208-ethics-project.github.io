@@ -1,6 +1,7 @@
-import { useState } from 'react'
-import { db } from '../db'
 import { useLiveQuery } from 'dexie-react-hooks'
+import { useState } from 'react'
+
+import { db } from '../db'
 
 async function addFriend(name: string, age: number) {
   try {
@@ -35,7 +36,7 @@ function Friends() {
   )
 }
 
-function Admin() {
+function HomePage() {
   const [name, setName] = useState('')
   const [age, setAge] = useState(0)
 
@@ -45,17 +46,19 @@ function Admin() {
       <p>Here is some text!!!</p>
       <Friends />
       <input
-        className='border-2'
+        className='border-2 block'
         onChange={e => setName(e.target.value)}
       ></input>
       <input
-        className='border-2'
+        className='border-2 block'
         type='number'
         onChange={e => setAge(parseInt(e.target.value))}
       ></input>
-      <button onClick={() => addFriend(name, age)}>Submit</button>
+      <button className='' onClick={() => addFriend(name, age)}>
+        Submit
+      </button>
     </>
   )
 }
 
-export default Admin
+export default HomePage

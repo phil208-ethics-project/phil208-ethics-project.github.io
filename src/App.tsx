@@ -1,18 +1,18 @@
-import { Routes, Route, Outlet } from "react-router-dom";
-import { Suspense } from "react";
+import { Suspense } from 'react'
+import { Route, Routes } from 'react-router-dom'
 
-import HomePage from "./pages/HomePage";
-import NotFound from "./pages/NotFound";
+import HomePage from './pages/HomePage'
+import NotFound from './pages/NotFound'
 
 function App() {
   return (
-    <Suspense fallback={"abc"}>
+    <Suspense fallback={'abc'}>
       <Routes>
         <Route index element={<HomePage />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </Suspense>
-  );
+  )
 }
 
-export default App;
+export default App

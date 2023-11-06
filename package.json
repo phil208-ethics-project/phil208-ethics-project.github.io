@@ -13,7 +13,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "lint": "eslint . --ext ts,js"
+    "lint": "eslint . --ext ts,js",
+    "pretty": "prettier --write ."
   },
   "dependencies": {
     "dexie": "^3.2.4",
