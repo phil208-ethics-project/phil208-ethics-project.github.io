@@ -11,7 +11,7 @@ export default function NewStudentForm() {
   const [gender, setGender] = useState<Gender>('n/a')
 
   return (
-    <div className='m-16'>
+    <div className='ms-16 mt-16'>
       <form
         onSubmit={e => {
           console.log(e.target)
