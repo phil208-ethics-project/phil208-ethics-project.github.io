@@ -94,7 +94,7 @@ export default function NewStudentForm() {
               value={gender}
               onChange={e => setGender((e.target.value || 'n/a') as Gender)}
             >
-              <option value='' disabled selected hidden>
+              <option value='' disabled hidden>
                 Choose...
               </option>
               <option value='male'>Male</option>
