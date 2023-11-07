@@ -6,7 +6,7 @@ import { db, Student } from '../../../db'
 function StudentRow({ student }: { student: Student }) {
   return (
     <tr
-      className='bg-white border-b hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer'
+      className='bg-white border-b hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors'
       onClick={() => alert(`You clicked on student #${student.id}`)}
     >
       <td className='px-6 py-4'>{student.id}</td>
@@ -15,7 +15,7 @@ function StudentRow({ student }: { student: Student }) {
       </td>
       <td className='pe-3'>
         <div
-          className='hover:bg-gray-200 rounded-full p-2 aspect-square flex justify-center items-center'
+          className='hover:bg-gray-200 rounded-full p-2 aspect-square flex justify-center items-center transition-colors'
           onClick={e => {
             e.stopPropagation()
             if (student.id) db.students.delete(student.id)
