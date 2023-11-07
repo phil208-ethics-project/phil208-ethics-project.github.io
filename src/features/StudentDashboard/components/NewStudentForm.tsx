@@ -97,7 +97,7 @@ export default function NewStudentForm() {
           </div>
         </div>
         <button
-          className='border-2 border-neutral-400 p-2 hover:bg-neutral-100 transition-colors'
+          className='border-2 rounded p-2 hover:bg-gray-100 transition-colors text-xs text-gray-700 uppercase font-bold'
           type='submit'
         >
           Submit
