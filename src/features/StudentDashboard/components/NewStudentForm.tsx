@@ -7,8 +7,8 @@ type Gender = 'male' | 'female' | 'nonbinary' | 'n/a'
 export default function NewStudentForm() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [age, setAge] = useState(0)
-  const [gender, setGender] = useState<Gender>('n/a')
+  const [age, setAge] = useState<string | number>('')
+  const [gender, setGender] = useState<Gender>('' as Gender)
 
   return (
     <div className='ms-16 mt-16'>
@@ -19,9 +19,13 @@ export default function NewStudentForm() {
           db.students.add({
             first_name: firstName,
             last_name: lastName,
-            age,
+            age: age as number,
             gender,
           })
+          setFirstName('')
+          setLastName('')
+          setAge('')
+          setGender('' as Gender)
         }}
       >
         <div className='grid gap-6 mb-6 md:grid-cols-2'>
@@ -38,6 +42,7 @@ export default function NewStudentForm() {
               className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
               placeholder='John'
               required
+              value={firstName}
               onChange={e => setFirstName(e.target.value)}
             />
           </div>
@@ -54,6 +59,7 @@ export default function NewStudentForm() {
               className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
               placeholder='Doe'
               required
+              value={lastName}
               onChange={e => setLastName(e.target.value)}
             />
           </div>
@@ -70,6 +76,7 @@ export default function NewStudentForm() {
               className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
               placeholder='10'
               required
+              value={age}
               onChange={e => setAge(parseInt(e.target.value))}
             />
           </div>
@@ -84,6 +91,7 @@ export default function NewStudentForm() {
               required
               id='gender'
               className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 invalid:text-gray-400'
+              value={gender}
               onChange={e => setGender((e.target.value || 'n/a') as Gender)}
             >
               <option value='' disabled selected hidden>
