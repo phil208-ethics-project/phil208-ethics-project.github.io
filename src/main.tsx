@@ -6,12 +6,9 @@ import { BrowserRouter } from 'react-router-dom'
 
 import App from './App'
 
-const isProduction = process.env.NODE_ENV === 'production'
-const basename = isProduction ? '/phil208-ethics-project' : '/'
-
 createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
-    <BrowserRouter basename={basename}>
+    <BrowserRouter>
       <App />
     </BrowserRouter>
   </StrictMode>,
