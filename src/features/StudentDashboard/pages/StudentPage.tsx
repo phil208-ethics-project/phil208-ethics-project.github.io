@@ -1,7 +1,9 @@
+import useSetTitle from '../../../hooks/useSetTitle'
 import NewStudentForm from '../components/NewStudentForm'
 import StudentTable from '../components/StudentTable'
 
 export default function StudentDastboard() {
+  useSetTitle('Students | CS 208 Ethics Project')
   return (
     <div className='absolute grid gap-6 mb-6 sm:grid-cols-2'>
       <div>
