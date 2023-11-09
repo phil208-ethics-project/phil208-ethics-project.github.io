@@ -1,10 +1,12 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import Fuse, { FuseResult } from 'fuse.js'
 import { useEffect, useMemo, useState } from 'react'
+import { ImCancelCircle } from 'react-icons/im'
 import { Link } from 'react-router-dom'
 
 import { db, Student } from '../db'
 import useDebounce from '../hooks/useDebounce'
+import useFocused from '../hooks/useFocused'
 
 const fuse = new Fuse<Student>([], {
   keys: ['first_name', 'last_name'],
@@ -17,7 +19,8 @@ interface ItemProps {
 function Item({ student }: ItemProps) {
   return (
     <Link
-      className='block hover:bg-gray-100 rounded p-1'
+      tabIndex={0}
+      className='block hover:bg-gray-100 rounded p-1 truncate'
       to={`/student/${student.item.id}`}
     >
       {student.item.first_name} {student.item.last_name}
@@ -29,6 +32,11 @@ export default function FuzzyStudentSearch() {
   const [value, setValue] = useState('')
   const search = useDebounce(value, 350)
   const [results, setResults] = useState<FuseResult<Student>[]>([])
+  const focus = useFocused()
+  const optionsAvailible = useMemo(
+    () => focus.isFocused || value !== '',
+    [focus.isFocused, value],
+  )
 
   const students = useLiveQuery(async () => {
     return await db.students.toArray()
@@ -48,13 +56,26 @@ export default function FuzzyStudentSearch() {
   }, [search, students])
 
   return (
-    <div className=''>
-      <input
-        value={value}
-        onChange={e => setValue(e.target.value)}
-        className='border-2 peer rounded-full p-2 px-6'
-      ></input>
-      <div className='hidden peer-focus:block hover:block absolute bg-white rounded border-2 opacity-95 p-2'>
+    <div className='inline-block relative'>
+      <div className='relative border-2 peer rounded-full p-2 ps-6 flex flex-row items-center'>
+        <input
+          {...focus.props}
+          placeholder='Search...'
+          value={value}
+          onChange={e => setValue(e.target.value)}
+          className='outline-none inline'
+        />
+        <ImCancelCircle
+          data-isFocused={optionsAvailible}
+          onClick={() => setValue('')}
+          className='opacity-0 text-gray-200 hover:text-gray-300 cursor-pointer transition-all text-xl data-[isFocused=true]:opacity-100'
+        />
+      </div>
+
+      <div
+        data-isFocused={optionsAvailible}
+        className='hidden hover:block focus:block absolute w-full bg-white rounded border-2 opacity-95 p-2 data-[isFocused=true]:block'
+      >
         {results.map((student, index) => (
           <Item key={index} student={student} />
         ))}
