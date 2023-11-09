@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import FuzzyStudentSearch from '../../../components/FuzzyStudentSearch'
 import { db } from '../../../db'
 
 type Gender = 'male' | 'female' | 'nonbinary' | 'n/a'
@@ -111,6 +112,7 @@ export default function NewStudentForm() {
           Submit
         </button>
       </form>
+      <FuzzyStudentSearch />
     </div>
   )
 }
