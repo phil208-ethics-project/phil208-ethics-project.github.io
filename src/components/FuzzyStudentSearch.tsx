@@ -56,14 +56,14 @@ export default function FuzzyStudentSearch() {
   }, [search, students])
 
   return (
-    <div className='inline-block relative'>
+    <div className='inline-block relative w-full'>
       <div className='relative border-2 peer rounded-full p-2 ps-6 flex flex-row items-center'>
         <input
           {...focus.props}
           placeholder='Search...'
           value={value}
           onChange={e => setValue(e.target.value)}
-          className='outline-none inline'
+          className='outline-none inline w-full'
         />
         <ImCancelCircle
           data-isFocused={optionsAvailible}
@@ -74,7 +74,7 @@ export default function FuzzyStudentSearch() {
 
       <div
         data-isFocused={optionsAvailible}
-        className='hidden hover:block focus:block absolute w-full bg-white rounded border-2 opacity-95 p-2 data-[isFocused=true]:block'
+        className='z-10 hidden hover:block focus:block absolute w-full bg-white rounded-lg border-2 opacity-95 p-2 data-[isFocused=true]:block'
       >
         {results.map((student, index) => (
           <Item key={index} student={student} />
