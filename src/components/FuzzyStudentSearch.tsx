@@ -34,41 +34,34 @@ export default function FuzzyStudentSearch() {
   const [results, setResults] = useState<FuseResult<Student>[]>([])
   const focus = useFocused()
   const optionsAvailible = useMemo(
-    () => focus.isFocused || value !== '',
-    [focus.isFocused, value],
+    () => focus.isFocused && results.length != 0,
+    [focus.isFocused, results.length == 0],
   )
 
   const students = useLiveQuery(async () => {
     return await db.students.toArray()
   }, [])
 
-  const allStudentsFuseResults = useMemo(
-    () => students?.map((student, refIndex) => ({ item: student, refIndex })),
-    [students],
-  )
-
   useEffect(() => fuse.setCollection(students || []), [students])
 
   useEffect(() => {
     const res = fuse.search(search)
-    if (res.length == 0) return setResults(allStudentsFuseResults || [])
     setResults(res)
   }, [search, students])
 
   return (
-    <div className='inline-block relative w-full'>
-      <div className='relative border-2 peer rounded-full p-2 ps-6 flex flex-row items-center'>
+    <div {...focus.props} className='inline-block relative w-full'>
+      <div className='relative border-2 peer rounded-full p-2 ps-6 flex flex-row items-center pe-2'>
         <input
-          {...focus.props}
           placeholder='Search...'
           value={value}
           onChange={e => setValue(e.target.value)}
           className='outline-none inline w-full'
         />
         <ImCancelCircle
-          data-isFocused={optionsAvailible}
+          data-isvisible={value !== ''}
           onClick={() => setValue('')}
-          className='opacity-0 text-gray-200 hover:text-gray-300 cursor-pointer transition-all text-xl data-[isFocused=true]:opacity-100'
+          className='opacity-0 text-gray-200 hover:text-gray-300 cursor-pointer font-thin hover:font-bold transition-all text-2xl data-[isvisible=true]:opacity-100'
         />
       </div>
 
