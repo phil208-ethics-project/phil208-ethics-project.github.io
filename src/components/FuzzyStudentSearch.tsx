@@ -73,8 +73,8 @@ export default function FuzzyStudentSearch() {
       </div>
 
       <div
-        data-isFocused={optionsAvailible}
-        className='z-10 hidden hover:block focus:block absolute w-full bg-white rounded-lg border-2 opacity-95 p-2 data-[isFocused=true]:block'
+        data-isfocused={optionsAvailible}
+        className='z-10 hidden hover:block focus:block absolute w-full bg-white rounded-lg border-2 opacity-95 p-2 data-[isfocused=true]:block'
       >
         {results.map((student, index) => (
           <Item key={index} student={student} />
