@@ -1,7 +1,7 @@
 import { saveAs } from 'file-saver'
 import JsZip from 'jszip'
 
-import { db } from '../db'
+import { db } from '../../../db'
 
 async function getTableString(content: any[]) {
   const columns = Object.keys(content[0])
