@@ -1,6 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import Fuse, { FuseResult } from 'fuse.js'
 import { useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import { db, Student } from '../db'
 import useDebounce from '../hooks/useDebounce'
@@ -15,9 +16,12 @@ interface ItemProps {
 
 function Item({ student }: ItemProps) {
   return (
-    <div>
+    <Link
+      className='block hover:bg-gray-100 rounded p-1'
+      to={`/student/${student.item.id}`}
+    >
       {student.item.first_name} {student.item.last_name}
-    </div>
+    </Link>
   )
 }
 
@@ -28,8 +32,8 @@ export default function FuzzyStudentSearch() {
 
   const students = useLiveQuery(async () => {
     return await db.students.toArray()
-    // return new Fuse(students, { keys: ['first_name', 'last_name'] })
   }, [])
+
   const allStudentsFuseResults = useMemo(
     () => students?.map((student, refIndex) => ({ item: student, refIndex })),
     [students],
@@ -44,13 +48,13 @@ export default function FuzzyStudentSearch() {
   }, [search, students])
 
   return (
-    <div>
+    <div className=''>
       <input
         value={value}
         onChange={e => setValue(e.target.value)}
-        className='border-2'
+        className='border-2 peer rounded-full p-2 px-6'
       ></input>
-      <div>
+      <div className='hidden peer-focus:block hover:block absolute bg-white rounded border-2 opacity-95 p-2'>
         {results.map((student, index) => (
           <Item key={index} student={student} />
         ))}

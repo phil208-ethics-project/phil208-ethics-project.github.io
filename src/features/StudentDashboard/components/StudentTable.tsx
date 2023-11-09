@@ -1,13 +1,15 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { FaRegTrashAlt } from 'react-icons/fa'
+import { useNavigate } from 'react-router'
 
 import { db, Student } from '../../../db'
 
 function StudentRow({ student }: { student: Student }) {
+  const navigate = useNavigate()
   return (
     <tr
       className='bg-white border-b hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors'
-      onClick={() => alert(`You clicked on student #${student.id}`)}
+      onClick={() => navigate(`/student/${student.id}`)}
     >
       <td className='px-6 py-4'>{student.id}</td>
       <td className='px-6 py-4'>
