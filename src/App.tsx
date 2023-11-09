@@ -1,17 +1,28 @@
 import { Suspense } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Outlet, Route, Routes } from 'react-router-dom'
 
+import { Header } from './features/Header'
 import StudentDastboard from './features/StudentDashboard'
 import HomePage from './pages/HomePage'
 import NotFound from './pages/NotFound'
 
 function App() {
   return (
-    <Suspense fallback={'Waiting...'}>
+    <Suspense fallback='Waiting...'>
       <Routes>
-        <Route index element={<HomePage />} />
-        <Route path='student-dashboard' element={<StudentDastboard />} />
-        <Route path='*' element={<NotFound />} />
+        <Route
+          path='/'
+          element={
+            <>
+              <Header />
+              <Outlet />
+            </>
+          }
+        >
+          <Route index element={<HomePage />} />
+          <Route path='student-dashboard' element={<StudentDastboard />} />
+          <Route path='*' element={<NotFound />} />
+        </Route>
       </Routes>
     </Suspense>
   )
