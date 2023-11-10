@@ -1,5 +1,5 @@
 import FileUpload from '../features/SaveData/components/FileUpload'
-import readFile from '../features/SaveData/lib/readFile'
+import { readZip } from '../features/SaveData/lib/readFile'
 
 function HomePage() {
   return (
@@ -8,8 +8,8 @@ function HomePage() {
       <p>Here is some text!!!</p>
       <FileUpload
         onUpload={async files => {
-          const fileStr = await readFile(files[0])
-          console.log(fileStr)
+          const cotnent = await readZip(files[0])
+          console.log(cotnent)
         }}
       />
     </>
