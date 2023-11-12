@@ -11,10 +11,9 @@ export default function NewStudentForm() {
   const [gender, setGender] = useState<Gender>('' as Gender)
 
   return (
-    <div className='ms-16 mt-16'>
+    <div className='mx-8 my-8 flex-grow max-w-2xl'>
       <form
         onSubmit={e => {
-          console.log(e.target)
           e.preventDefault()
           db.students.add({
             first_name: firstName,
@@ -28,11 +27,11 @@ export default function NewStudentForm() {
           setGender('' as Gender)
         }}
       >
-        <div className='grid gap-6 mb-6 md:grid-cols-2'>
+        <div className='grid gap-6 mb-6 lg:grid-cols-2'>
           <div>
             <label
               htmlFor='first_name'
-              className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+              className='block mb-2 w-full text-sm font-medium text-gray-900 dark:text-white'
             >
               First name
             </label>

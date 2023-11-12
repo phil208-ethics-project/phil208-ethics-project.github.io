@@ -33,21 +33,23 @@ function StudentRow({ student }: { student: Student }) {
 export default function StudentTable() {
   const students = useLiveQuery(() => db.students.toArray())
   return (
-    <div className='w-full max-h-full overflow-y-auto rounded border-4 relative min-h-[100px]'>
-      <table className='w-full text-sm text-left text-gray-500'>
-        <thead className='text-xs text-gray-700 uppercase bg-gray-200 sticky top-0'>
-          <tr>
-            <th className='px-6 py-3'>id</th>
-            <th className='px-6 py-3'>Name</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {students?.map((student, index) => (
-            <StudentRow key={index} student={student} />
-          ))}
-        </tbody>
-      </table>
+    <div className=' h-[36rem] sm:max-w-sm md:mx-0 sm:my-8 max-w-full flex-grow'>
+      <div className='w-full max-h-full overflow-y-auto rounded border-4 relative min-h-[100px]'>
+        <table className='w-full text-sm text-left text-gray-500'>
+          <thead className='text-xs text-gray-700 uppercase bg-gray-200 sticky top-0'>
+            <tr>
+              <th className='px-6 py-3'>id</th>
+              <th className='px-6 py-3'>Name</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {students?.map((student, index) => (
+              <StudentRow key={index} student={student} />
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

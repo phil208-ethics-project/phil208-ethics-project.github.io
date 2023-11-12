@@ -8,7 +8,7 @@ interface NavlinkProps {
 function Navlink({ children, to }: NavlinkProps) {
   return (
     <Link
-      className='text-black font-semibold uppercase border-b-2 border-transparent hover:border-black transition-all'
+      className='text-black font-semibold uppercase border-b-2 border-transparent hover:border-black transition-all leading-5'
       to={to}
     >
       {children}

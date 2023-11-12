@@ -10,15 +10,9 @@ export default function StudentDastboard() {
       <div className='m-10 mb-0'>
         <FuzzyStudentSearch />
       </div>
-      <div className='absolute grid gap-6 mb-6 sm:grid-cols-2'>
-        <div>
-          <NewStudentForm />
-        </div>
-        <div className='h-screen relative'>
-          <div className='w-64 h-2/3 mx-16 sm:mx-0 sm:my-16'>
-            <StudentTable />
-          </div>
-        </div>
+      <div className='m-0 sm:m-6 flex flex-col sm:flex-row'>
+        <NewStudentForm />
+        <StudentTable />
       </div>
     </div>
   )
