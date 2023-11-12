@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { db } from '../../../db'
 
-type Gender = 'male' | 'female' | 'nonbinary' | 'n/a'
+type Gender = 'male' | 'female' | 'nonbinary' | 'other'
 
 export default function NewStudentForm() {
   const [firstName, setFirstName] = useState('')
@@ -91,7 +91,7 @@ export default function NewStudentForm() {
               id='gender'
               className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 invalid:text-gray-400'
               value={gender}
-              onChange={e => setGender((e.target.value || 'n/a') as Gender)}
+              onChange={e => setGender((e.target.value || 'other') as Gender)}
             >
               <option value='' disabled hidden>
                 Choose...
@@ -99,7 +99,7 @@ export default function NewStudentForm() {
               <option value='male'>Male</option>
               <option value='female'>Female</option>
               <option value='nonbinary'>Non-Binary</option>
-              <option value='n/a'>I'd prefer not to say</option>
+              <option value='other'>I'd prefer not to say</option>
             </select>
           </div>
         </div>
