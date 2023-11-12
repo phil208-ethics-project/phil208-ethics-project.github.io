@@ -7,8 +7,8 @@ type Gender = 'male' | 'female' | 'nonbinary' | 'other'
 export default function NewStudentForm() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [age, setAge] = useState<string | number>('')
-  const [gender, setGender] = useState<Gender>('' as Gender)
+  const [age, setAge] = useState<number>(NaN)
+  const [gender, setGender] = useState<Gender | ''>('')
 
   return (
     <div className='mx-8 my-8 flex-grow max-w-2xl'>
@@ -18,13 +18,13 @@ export default function NewStudentForm() {
           db.students.add({
             first_name: firstName,
             last_name: lastName,
-            age: age as number,
-            gender,
+            age: age,
+            gender: gender || 'other',
           })
           setFirstName('')
           setLastName('')
-          setAge('')
-          setGender('' as Gender)
+          setAge(NaN)
+          setGender('')
         }}
       >
         <div className='grid gap-6 mb-6 lg:grid-cols-2'>
@@ -75,7 +75,7 @@ export default function NewStudentForm() {
               className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
               placeholder='10'
               required
-              value={age}
+              value={age.toString()}
               onChange={e => setAge(parseInt(e.target.value))}
             />
           </div>
@@ -91,7 +91,7 @@ export default function NewStudentForm() {
               id='gender'
               className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 invalid:text-gray-400'
               value={gender}
-              onChange={e => setGender((e.target.value || 'other') as Gender)}
+              onChange={e => setGender(e.target.value as Gender)}
             >
               <option value='' disabled hidden>
                 Choose...
