@@ -57,7 +57,7 @@ export class StudentGradesDB extends Dexie {
   students!: Table<Student, number>
   fictional_grades!: Table<FictionalGrade, number>
   informational_grades!: Table<InformationalGrade, number>
-  spelling_grades!: Table<InformationalGrade, number>
+  spelling_grades!: Table<SpellingGrade, number>
   reading_grades!: Table<ReadingLevelGrade, number>
 
   constructor() {
