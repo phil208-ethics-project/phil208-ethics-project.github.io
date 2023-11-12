@@ -8,10 +8,10 @@ export default function StudentDastboard() {
   useSetTitle('Students | CS 208 Ethics Project')
   return (
     <div>
-      <div className='m-10 mb-0'>
+      <div className='m-6'>
         <FuzzyStudentSearch />
       </div>
-      <div className='m-0 sm:m-6 flex flex-col sm:flex-row'>
+      <div className='mx-0 sm:mx-6 flex flex-col sm:flex-row gap-6 sm:gap-0'>
         <NewStudentForm />
         <StudentTable />
       </div>

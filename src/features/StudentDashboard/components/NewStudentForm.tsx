@@ -12,7 +12,7 @@ export default function NewStudentForm() {
 
   return (
     <form
-      className='mx-8 my-8 flex-grow max-w-2xl'
+      className='px-6 flex-grow max-w-2xl'
       onSubmit={e => {
         e.preventDefault()
         db.students.add({
