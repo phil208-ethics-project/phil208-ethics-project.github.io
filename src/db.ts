@@ -5,7 +5,7 @@ export interface Student {
   id?: number
   first_name: string
   last_name: string
-  gender: 'male' | 'female' | 'nonbinary' | 'n/a'
+  gender: 'male' | 'female' | 'nonbinary' | 'other'
   age: number
 }
 
@@ -54,13 +54,11 @@ export interface ReadingLevelGrade {
 }
 
 export class StudentGradesDB extends Dexie {
-  // 'friends' is added by dexie when declaring the stores()
-  // We just tell the typing system this is the case
   students!: Table<Student, number>
   fictional_grades!: Table<FictionalGrade, number>
   informational_grades!: Table<InformationalGrade, number>
   spelling_grades!: Table<InformationalGrade, number>
-  reading_grades!: Table<InformationalGrade, number>
+  reading_grades!: Table<ReadingLevelGrade, number>
 
   constructor() {
     super('StudentGrades')
