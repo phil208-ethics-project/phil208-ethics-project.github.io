@@ -1,10 +1,10 @@
+import { Header } from '@features/Header'
+import StudentDastboard from '@features/StudentDashboard'
+import HomePage from '@pages/HomePage'
+import NotFound from '@pages/NotFound'
+
 import { Suspense } from 'react'
 import { Outlet, Route, Routes } from 'react-router-dom'
-
-import { Header } from './features/Header'
-import StudentDastboard from './features/StudentDashboard'
-import HomePage from './pages/HomePage'
-import NotFound from './pages/NotFound'
 
 function App() {
   return (

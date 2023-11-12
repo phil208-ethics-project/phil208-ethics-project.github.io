@@ -1,8 +1,8 @@
+import { db, Student } from '@db'
+
 import { useLiveQuery } from 'dexie-react-hooks'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { useNavigate } from 'react-router'
-
-import { db, Student } from '../../../db'
 
 function StudentRow({ student }: { student: Student }) {
   const navigate = useNavigate()

@@ -1,8 +1,9 @@
+import { db } from '@db'
+
 import { saveAs } from 'file-saver'
 import JsZip from 'jszip'
 
-import { db } from '../../../db'
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function getTableString(content: any[]) {
   const columns = Object.keys(content[0])
   const csvRows = [columns.join(',')]

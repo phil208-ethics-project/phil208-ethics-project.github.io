@@ -17,11 +17,24 @@
     "project": "./tsconfig.json",
     "ecmaVersion": "latest",
     "sourceType": "module",
-    "extraFileExtensions": []
+    "extraFileExtensions": [],
+    "tsconfigRootDir": "./"
   },
-  "plugins": ["@typescript-eslint", "simple-import-sort"],
+  "plugins": ["@typescript-eslint", "simple-import-sort", "import"],
   "rules": {
-    "simple-import-sort/imports": "error",
+    "simple-import-sort/imports": [
+      "error",
+      {
+        "groups": [
+          ["^\\."],
+          ["^"],
+          ["^@\\w?"],
+          ["^\\w"],
+          ["^node:"],
+          ["^\\u0000"]
+        ]
+      }
+    ],
     "simple-import-sort/exports": "error",
     "import/no-named-as-default-member": "off",
     "import/first": "error",
@@ -40,7 +53,9 @@
   },
   "settings": {
     "import/resolver": {
-      "typescript": {}
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
     }
   }
 }

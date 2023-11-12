@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom'
-
-import exportCsv from '../../SaveData/lib/exportCsv'
 import Navbar from './Navbar'
+
+import exportCsv from '@features/SaveData/lib/exportCsv'
+
+import { Link } from 'react-router-dom'
 
 export default function Header() {
   return (

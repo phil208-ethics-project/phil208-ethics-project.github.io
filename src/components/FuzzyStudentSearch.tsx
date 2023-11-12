@@ -1,12 +1,12 @@
+import { db, Student } from '@db'
+import useDebounce from '@hooks/useDebounce'
+import useFocused from '@hooks/useFocused'
+
 import { useLiveQuery } from 'dexie-react-hooks'
 import Fuse, { FuseResult } from 'fuse.js'
 import { useEffect, useMemo, useState } from 'react'
 import { ImCancelCircle } from 'react-icons/im'
 import { Link } from 'react-router-dom'
-
-import { db, Student } from '../db'
-import useDebounce from '../hooks/useDebounce'
-import useFocused from '../hooks/useFocused'
 
 const fuse = new Fuse<Student>([], {
   keys: ['first_name', 'last_name'],
