@@ -1,5 +1,11 @@
 import Dexie, { Table } from 'dexie'
 
+export interface Session {
+  id?: number
+  date: number
+  name?: string
+}
+
 export interface Student {
   id?: number
   first_name: string
@@ -9,7 +15,7 @@ export interface Student {
 }
 
 export interface FictionalGrade {
-  id?: number
+  session_id: number
   student_id: number
   v: boolean
   kd: boolean
@@ -22,7 +28,7 @@ export interface FictionalGrade {
 }
 
 export interface InformationalGrade {
-  id?: number
+  session_id: number
   student_id: number
   v: boolean
   kd: boolean
@@ -35,7 +41,7 @@ export interface InformationalGrade {
 }
 
 export interface SpellingGrade {
-  id?: number
+  session_id: number
   student_id: number
   phonetic_short_vowels: string
   phonetic_consonant_blends: string
@@ -48,25 +54,28 @@ export interface SpellingGrade {
 }
 
 export interface ReadingLevelGrade {
+  session_id: number
   student_id: number
   reading_level: number
 }
 
 export class StudentGradesDB extends Dexie {
+  sessions!: Table<Session, number>
   students!: Table<Student, number>
-  fictional_grades!: Table<FictionalGrade, number>
-  informational_grades!: Table<InformationalGrade, number>
-  spelling_grades!: Table<SpellingGrade, number>
-  reading_grades!: Table<ReadingLevelGrade, number>
+  fictional_grades!: Table<FictionalGrade, [number, number]>
+  informational_grades!: Table<InformationalGrade, [number, number]>
+  spelling_grades!: Table<SpellingGrade, [number, number]>
+  reading_grades!: Table<ReadingLevelGrade, [number, number]>
 
   constructor() {
     super('StudentGrades')
     this.version(1).stores({
+      sessions: '++id,date,name',
       students: '++id,[first_name+last_name]',
-      fictional_grades: '++id, student_id',
-      informational_grades: '++id, student_id',
-      spelling_grades: '++id, student_id',
-      reading_grades: '++id, student_id',
+      fictional_grades: '[session_id+student_id]',
+      informational_grades: '[session_id+student_id]',
+      spelling_grades: '[session_id+student_id]',
+      reading_grades: '[session_id+student_id]',
     })
   }
 }

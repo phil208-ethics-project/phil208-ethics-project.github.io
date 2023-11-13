@@ -1,8 +1,9 @@
 import Dialog from '@components/Dialog'
+import { SessionContext } from '@components/SessionContext'
 import { db, InformationalGrade } from '@db'
 
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useContext, useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router'
 
 interface Props {
   isOpen: boolean
@@ -10,15 +11,14 @@ interface Props {
 }
 
 async function getInitalInformational(
+  session_id: number,
   student_id: number,
 ): Promise<InformationalGrade> {
-  const result = await db.informational_grades
-    .where('student_id')
-    .equals(student_id)
-    .first()
+  const result = await db.informational_grades.get([session_id, student_id])
   if (result) return result
   return {
     student_id,
+    session_id,
     ca: false,
     e: false,
     go: false,
@@ -32,11 +32,18 @@ async function getInitalInformational(
 
 export default function InformationalGradesDialog({ isOpen, exit }: Props) {
   const { id } = useParams()
+  const navigate = useNavigate()
+  const { session } = useContext(SessionContext)
 
   const [value, setValue] = useState<InformationalGrade>()
 
   useEffect(() => {
-    getInitalInformational(parseInt(id!)).then(v => setValue(v))
+    if (!isOpen) return
+    console.log(session)
+    const student_id = parseInt(id ?? '')
+    const session_id = session ?? NaN
+    if (isNaN(student_id) || isNaN(session_id)) return navigate('/')
+    getInitalInformational(session_id, student_id).then(v => setValue(v))
   }, [isOpen])
 
   return (

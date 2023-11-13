@@ -1,8 +1,9 @@
+import { SessionContext } from '@components/SessionContext'
 import { Header } from '@features/Header'
 import HomePage from '@pages/HomePage'
 import NotFound from '@pages/NotFound'
 
-import { lazy, Suspense, useEffect } from 'react'
+import { lazy, Suspense, useContext, useEffect } from 'react'
 import { Outlet, Route, Routes } from 'react-router-dom'
 
 const StudentDastboard = lazy(() => import('@features/StudentDashboard'))
@@ -14,7 +15,9 @@ async function preloadPages() {
 }
 
 function App() {
+  const { setSession } = useContext(SessionContext)
   useEffect(() => {
+    setSession(0)
     preloadPages()
   }, [])
 
