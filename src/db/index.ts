@@ -32,11 +32,11 @@ export interface InformationalGrade {
   student_id: number
   v: boolean
   kd: boolean
-  ca: boolean
+  ar: boolean
   i: boolean
   e: boolean
   l: boolean
-  go: boolean
+  tf: boolean
   mi: boolean
 }
 

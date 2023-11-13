@@ -1,4 +1,4 @@
-import InformationalGradesDialog from '../components/InformationalGradesDialog'
+import InformationalGradesDialog from '../components/GradesDialog'
 
 import { db } from '@db'
 import useSetTitle from '@hooks/useSetTitle'

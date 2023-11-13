@@ -25,12 +25,6 @@ export default function Dialog({ isOpen, exit, children }: DialogProps) {
         className='bg-white rounded md:mx-28 my-28 p-6 shadow-2xl border-gray-200 border-4 h-fit'
       >
         {children}
-        <button
-          className='border-2 rounded p-2 hover:bg-gray-100 transition-colors text-xs text-gray-700 uppercase font-bold'
-          onClick={exit}
-        >
-          Exit
-        </button>
       </div>
     </div>
   )
