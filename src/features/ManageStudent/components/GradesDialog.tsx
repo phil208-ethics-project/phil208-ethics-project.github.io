@@ -58,6 +58,29 @@ export default function InformationalGradesDialog({ isOpen, exit }: Props) {
   const [informationalGrades, setInformationalGrades] =
     useState<InformationalGrade>()
   const [fictionalGrades, setFictionalGrades] = useState<FictionalGrade>()
+  const informationalSum =
+    (informationalGrades &&
+      +informationalGrades.ar +
+        +informationalGrades.e +
+        +informationalGrades.i +
+        +informationalGrades.kd +
+        +informationalGrades.l +
+        +informationalGrades.mi +
+        +informationalGrades.tf +
+        +informationalGrades.v) ||
+    0
+
+  const fictionalSum =
+    (fictionalGrades &&
+      +fictionalGrades.ca +
+        +fictionalGrades.e +
+        +fictionalGrades.i +
+        +fictionalGrades.kd +
+        +fictionalGrades.l +
+        +fictionalGrades.mi +
+        +fictionalGrades.go +
+        +fictionalGrades.v) ||
+    0
 
   useEffect(() => {
     if (!isOpen) return
@@ -83,7 +106,7 @@ export default function InformationalGradesDialog({ isOpen, exit }: Props) {
       </h1>
 
       <table className='text-center w-full text-sm rtl:text-right text-gray-500 dark:text-gray-400 table-auto'>
-        <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+        <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b border-gray-100'>
           <tr>
             <th className='px-2 py-3'></th>
             <th className='px-2 py-3'>V</th>
@@ -94,10 +117,11 @@ export default function InformationalGradesDialog({ isOpen, exit }: Props) {
             <th className='px-2 py-3'>L</th>
             <th className='px-2 py-3'>TF</th>
             <th className='px-2 py-3'>MI</th>
+            <th className='px-2 py-3'>Total</th>
           </tr>
         </thead>
         <tbody>
-          <tr className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-t dark:border-gray-700'>
+          <tr className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 dark:border-gray-700'>
             <th className='px-2 py-3'>Informational</th>
 
             <td>
@@ -124,7 +148,7 @@ export default function InformationalGradesDialog({ isOpen, exit }: Props) {
               <input
                 checked={informationalGrades?.ar ?? false}
                 onChange={({ target }) =>
-                  setInformationalGrades(v => v && { ...v, ca: target.checked })
+                  setInformationalGrades(v => v && { ...v, ar: target.checked })
                 }
                 type='checkbox'
                 className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
@@ -164,7 +188,7 @@ export default function InformationalGradesDialog({ isOpen, exit }: Props) {
               <input
                 checked={informationalGrades?.tf ?? false}
                 onChange={({ target }) =>
-                  setInformationalGrades(v => v && { ...v, go: target.checked })
+                  setInformationalGrades(v => v && { ...v, tf: target.checked })
                 }
                 type='checkbox'
                 className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
@@ -180,9 +204,10 @@ export default function InformationalGradesDialog({ isOpen, exit }: Props) {
                 className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
               />
             </td>
+            <td>{informationalSum}</td>
           </tr>
         </tbody>
-        <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+        <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b border-gray-100'>
           <tr>
             <th className='px-2 py-3'></th>
 
@@ -194,10 +219,11 @@ export default function InformationalGradesDialog({ isOpen, exit }: Props) {
             <th className='px-2 py-3'>L</th>
             <th className='px-2 py-3'>GO</th>
             <th className='px-2 py-3'>MI</th>
+            <th className='px-2 py-3'></th>
           </tr>
         </thead>
         <tbody>
-          <tr className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-t dark:border-gray-700'>
+          <tr className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800  dark:border-gray-700'>
             <th className='px-2 py-3'>Fictional</th>
 
             <td>
@@ -280,6 +306,7 @@ export default function InformationalGradesDialog({ isOpen, exit }: Props) {
                 className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
               />
             </td>
+            <td>{fictionalSum}</td>
           </tr>
         </tbody>
       </table>
