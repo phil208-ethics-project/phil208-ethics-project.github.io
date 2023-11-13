@@ -70,6 +70,25 @@ export class StudentGradesDB extends Dexie {
       reading_grades: '++id, student_id',
     })
   }
+  async getStudentById(studentId: number): Promise<Student | undefined> {
+    return this.students.get(studentId);
+  }
+
+  async getFictionalGradeByStudentId(studentId: number): Promise<FictionalGrade | undefined> {
+    return this.fictional_grades.where('student_id').equals(studentId).first();
+  }
+
+  async getInformationalGradeByStudentId(studentId: number): Promise<InformationalGrade | undefined> {
+    return this.informational_grades.where('student_id').equals(studentId).first();
+  }
+
+  async getSpellingGradeByStudentId(studentId: number): Promise<SpellingGrade | undefined> {
+    return this.spelling_grades.where('student_id').equals(studentId).first();
+  }
+
+  async getReadingLevelGradeByStudentId(studentId: number): Promise<ReadingLevelGrade | undefined> {
+    return this.reading_grades.where('student_id').equals(studentId).first();
+  }
 }
 
 export const db = new StudentGradesDB()
