@@ -6,11 +6,11 @@ import { lazy, Suspense, useEffect } from 'react'
 import { Outlet, Route, Routes } from 'react-router-dom'
 
 const StudentDastboard = lazy(() => import('@features/StudentDashboard'))
-const StudentPage = lazy(() => import('@pages/StudentPage'))
+const StudentPage = lazy(() => import('@features/ManageStudent'))
 
 async function preloadPages() {
   await import('@features/StudentDashboard')
-  await import('@pages/StudentPage')
+  await import('@features/ManageStudent')
 }
 
 function App() {
