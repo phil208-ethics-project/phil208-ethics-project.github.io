@@ -1,14 +1,9 @@
 import Dialog from '@components/Dialog'
 import { SessionContext } from '@components/SessionContext'
-import { db, FictionalGrade, InformationalGrade } from '@db'
+import { db, FictionalGrade, InformationalGrade, Student } from '@db'
 
 import { useContext, useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router'
-
-interface Props {
-  isOpen: boolean
-  exit: () => void
-}
+import { useNavigate } from 'react-router'
 
 async function getInitalInformational(
   session_id: number,
@@ -50,8 +45,17 @@ async function getInitalFictional(
   }
 }
 
-export default function InformationalGradesDialog({ isOpen, exit }: Props) {
-  const { id } = useParams()
+interface GradesDialogProps {
+  isOpen: boolean
+  student: Student | undefined
+  exit: () => void
+}
+
+export default function GradesDialog({
+  isOpen,
+  exit,
+  student,
+}: GradesDialogProps) {
   const navigate = useNavigate()
   const { session } = useContext(SessionContext)
 
@@ -84,14 +88,14 @@ export default function InformationalGradesDialog({ isOpen, exit }: Props) {
 
   useEffect(() => {
     if (!isOpen) return
-    console.log(session)
-    const student_id = parseInt(id ?? '')
     const session_id = session ?? NaN
-    if (isNaN(student_id) || isNaN(session_id)) return navigate('/')
-    getInitalInformational(session_id, student_id).then(v => {
+    if (student?.id == null || isNaN(session_id)) {
+      return navigate('/')
+    }
+    getInitalInformational(session_id, student.id).then(v => {
       setInformationalGrades(v)
     })
-    getInitalFictional(session_id, student_id).then(v => {
+    getInitalFictional(session_id, student.id).then(v => {
       setFictionalGrades(v)
     })
   }, [isOpen])
@@ -99,7 +103,7 @@ export default function InformationalGradesDialog({ isOpen, exit }: Props) {
   return (
     <Dialog exit={exit} isOpen={isOpen}>
       <h1 className='text-xl font-extrabold dark:text-white'>
-        Grades
+        {student?.first_name} {student?.last_name}
         <small className='ms-2 font-semibold text-gray-500 dark:text-gray-400'>
           Enter student scores here
         </small>

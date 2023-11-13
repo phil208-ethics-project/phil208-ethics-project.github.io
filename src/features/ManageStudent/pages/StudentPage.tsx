@@ -13,10 +13,11 @@ export default function StudentPage() {
   const [openInformational, setOpenInformational] = useState(false)
 
   const student = useLiveQuery(async () => {
-    return db.students
+    const res = await db.students
       .get(parseInt(id || ''))
       .then(student => student ?? navigate('/'))
       .catch(() => navigate('/'))
+    return res || undefined
   }, [id])
 
   const title = student
@@ -42,6 +43,7 @@ export default function StudentPage() {
       <InformationalGradesDialog
         isOpen={openInformational}
         exit={() => setOpenInformational(false)}
+        student={student}
       />
     </>
   )
