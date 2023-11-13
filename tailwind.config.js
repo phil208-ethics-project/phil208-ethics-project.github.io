@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import forms from '@tailwindcss/forms'
+
 import plugin from 'tailwindcss/plugin'
 
 const children = plugin(({ addVariant }) => {
@@ -10,5 +12,5 @@ export default {
   darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {},
-  plugins: [children],
+  plugins: [children, forms],
 }

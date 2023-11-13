@@ -56,7 +56,7 @@ export default function FuzzyStudentSearch() {
           placeholder='Search...'
           value={value}
           onChange={e => setValue(e.target.value)}
-          className='outline-none inline w-full'
+          className='outline-none inline w-full border-0 focus:ring-0'
         />
         <ImCancelCircle
           data-isvisible={value !== ''}
