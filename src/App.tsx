@@ -2,13 +2,22 @@ import { Header } from '@features/Header'
 import HomePage from '@pages/HomePage'
 import NotFound from '@pages/NotFound'
 
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Outlet, Route, Routes } from 'react-router-dom'
 
 const StudentDastboard = lazy(() => import('@features/StudentDashboard'))
 const StudentPage = lazy(() => import('@pages/StudentPage'))
 
+async function preloadPages() {
+  await import('@features/StudentDashboard')
+  await import('@pages/StudentPage')
+}
+
 function App() {
+  useEffect(() => {
+    preloadPages()
+  }, [])
+
   return (
     <Suspense fallback='Waiting...'>
       <Routes>
