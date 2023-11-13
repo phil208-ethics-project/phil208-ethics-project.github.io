@@ -1,24 +1,18 @@
 import InformationalGradesDialog from '../components/GradesDialog'
+import useStudent from '../hooks/useStudent'
 
-import { db } from '@db'
 import useSetTitle from '@hooks/useSetTitle'
 
-import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
 
 export default function StudentPage() {
-  const { id } = useParams()
-  const navigate = useNavigate()
+  const { student, status } = useStudent()
+
   const [openInformational, setOpenInformational] = useState(false)
 
-  const student = useLiveQuery(async () => {
-    const res = await db.students
-      .get(parseInt(id || ''))
-      .then(student => student ?? navigate('/'))
-      .catch(() => navigate('/'))
-    return res || undefined
-  }, [id])
+  if (status === 'failed') {
+    return <p>The student you are looking for does not exist</p>
+  }
 
   const title = student
     ? `${student.first_name} ${student.last_name} | CS 208 Ethics Project`
