@@ -2,6 +2,8 @@ import useDelayedValue from '@hooks/useDelayedValue'
 import { useEscPressed } from '@hooks/useKeyPressed'
 import useOnClickOutside from '@hooks/useOnClickOutside'
 
+import { useEffect, useRef } from 'react'
+
 interface DialogProps {
   isOpen: boolean
   exit: () => void
@@ -10,22 +12,26 @@ interface DialogProps {
 
 export default function Dialog({ isOpen, exit, children }: DialogProps) {
   const open = useDelayedValue(isOpen)
+  const ref = useRef<HTMLDialogElement>(null)
+
+  useEffect(() => {
+    isOpen && ref.current?.showModal()
+    isOpen || ref.current?.close()
+  }, [isOpen])
+
   useEscPressed(() => exit(), [exit])
-  const ref = useOnClickOutside<HTMLDivElement>(
+  const outsideRef = useOnClickOutside<HTMLDivElement>(
     () => open && exit(),
-    [isOpen, open],
+    [open],
   )
   return (
-    <div
-      data-isopen={isOpen}
-      className='absolute w-full h-full bg-opacity-70 z-50 bg-black top-0 right-0 data-[isopen=false]:hidden flex justify-center'
-    >
+    <dialog className='shadow-2xl border-none bg-transparent' ref={ref}>
       <div
-        ref={ref}
-        className='bg-white rounded md:mx-28 my-28 p-6 shadow-2xl border-gray-200 border-4 h-fit'
+        ref={outsideRef}
+        className='bg-white rounded p-6 border-gray-200 border-4 h-fit overflow-x-auto'
       >
         {children}
       </div>
-    </div>
+    </dialog>
   )
 }
