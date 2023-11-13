@@ -1,10 +1,12 @@
 import { Header } from '@features/Header'
-import StudentDastboard from '@features/StudentDashboard'
 import HomePage from '@pages/HomePage'
 import NotFound from '@pages/NotFound'
 
-import { Suspense } from 'react'
+import { lazy, Suspense } from 'react'
 import { Outlet, Route, Routes } from 'react-router-dom'
+
+const StudentDastboard = lazy(() => import('@features/StudentDashboard'))
+const StudentPage = lazy(() => import('@pages/StudentPage'))
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
         >
           <Route index element={<HomePage />} />
           <Route path='student-dashboard' element={<StudentDastboard />} />
+          <Route path='student/:id' element={<StudentPage />} />
           <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
