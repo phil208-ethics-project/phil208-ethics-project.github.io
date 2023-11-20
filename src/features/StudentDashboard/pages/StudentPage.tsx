@@ -5,7 +5,7 @@ import FuzzyStudentSearch from '@components/FuzzyStudentSearch'
 import useSetTitle from '@hooks/useSetTitle'
 
 export default function StudentDastboard() {
-  useSetTitle('Students | CS 208 Ethics Project')
+  useSetTitle('Students | PHIL 208 Ethics Project')
   return (
     <div>
       <div className='m-6'>
