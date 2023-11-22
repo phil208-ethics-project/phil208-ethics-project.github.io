@@ -1,10 +1,14 @@
 import { useRef, useState } from 'react'
 
-interface FileUploadProps {
-  onUpload: (files: FileList) => void | Promise<void>
-}
+import { db } from '@db'
+import { parse } from "papaparse";
 
-export default function FileUpload({ onUpload }: FileUploadProps) {
+// interface FileUploadProps {
+//   onUpload: (files: FileList) => void | Promise<void>
+// }
+
+// export default function FileUpload({ onUpload }: FileUploadProps) {
+export default function FileUpload() {
   const fileUploadElement = useRef<HTMLInputElement>(null)
   const [over, setOver] = useState(false)
   return (
@@ -15,7 +19,15 @@ export default function FileUpload({ onUpload }: FileUploadProps) {
         e.preventDefault()
         e.stopPropagation()
         setOver(false)
-        onUpload(e.dataTransfer.files)
+        // onUpload(e.dataTransfer.files)
+        Array.from(e.dataTransfer.files)
+            .filter((file) => file.type === "text/csv")
+            .forEach(async (file) => {
+              const text = await file.text();
+              const result = parse(text, { header: true });
+              console.log(result) // print statement basically
+              db.students.bulkAdd(result);
+            });
       }}
       onDragOver={e => {
         e.preventDefault()

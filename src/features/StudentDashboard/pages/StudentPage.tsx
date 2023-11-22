@@ -8,9 +8,9 @@ import useSetTitle from '@hooks/useSetTitle'
 export default function StudentDastboard() {
   useSetTitle('Students | PHIL 208 Ethics Project')
 
-  const onUpload = (file: any) => {  // Dummy place holder
-    console.log('Uploaded files:', file);
-  };
+  // const onUpload = (file: any) => {  // Dummy place holder
+  //   console.log('Uploaded files:', file);
+  // };
   return (
     <div className="flex flex-col space-y-5">
       <div className='m-6'>
@@ -21,7 +21,7 @@ export default function StudentDastboard() {
         <div className='mx-0 sm:mx-6 flex sm:flex-row gap-6 sm:gap-0 space-x-10'>
           <div className='w-1/4'>
             <h1 className='mb-4'>Upload Students</h1>
-            <FileUpload onUpload={onUpload}/>
+            <FileUpload />
           </div>
           <div className='w-1/4'>
             <h1 className='mb-4'>Enter Students</h1>
