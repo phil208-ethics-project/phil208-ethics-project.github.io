@@ -1,9 +1,8 @@
 import Dialog from '@components/Dialog'
-import { SessionContext } from '@components/SessionContext'
 import { db, FictionalGrade, InformationalGrade, Student } from '@db'
 
-import { useContext, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router'
 
 async function getInitalInformational(
   session_id: number,
@@ -57,7 +56,8 @@ export default function GradesDialog({
   student,
 }: GradesDialogProps) {
   const navigate = useNavigate()
-  const { session } = useContext(SessionContext)
+  const params = useParams()
+  const session = parseInt(params.session || '')
 
   const [informationalGrades, setInformationalGrades] =
     useState<InformationalGrade>()

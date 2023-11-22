@@ -5,7 +5,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { HiOutlineClipboardList } from 'react-icons/hi'
-import { useNavigate } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 
 function StudentRow({
   student,
@@ -15,10 +15,12 @@ function StudentRow({
   setCurrStudent: (student: Student) => void
 }) {
   const navigate = useNavigate()
+  const params = useParams()
+  const session = parseInt(params.session || '')
   return (
     <tr
       className='bg-white border-b hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors'
-      onClick={() => navigate(`/student/${student.id}`)}
+      onClick={() => navigate(`/session/${session}/student/${student.id}`)}
     >
       <td className='px-6 py-4'>{student.id}</td>
       <td className='px-6 py-4'>

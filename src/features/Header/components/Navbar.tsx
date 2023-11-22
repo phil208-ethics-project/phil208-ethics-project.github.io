@@ -19,7 +19,7 @@ function Navlink({ children, to }: NavlinkProps) {
 export default function Navbar() {
   return (
     <div className='flex-grow flex justify-around'>
-      <Navlink to='student-dashboard'>Student Dashboard</Navlink>
+      <Navlink to='/session/1/student-dashboard'>Student Dashboard</Navlink>
     </div>
   )
 }

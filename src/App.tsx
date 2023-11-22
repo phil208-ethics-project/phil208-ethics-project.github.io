@@ -1,10 +1,10 @@
-import { SessionContext } from '@components/SessionContext'
-import { Header } from '@features/Header'
+import NoSessionHeaderPage from '@features/Header/pages/NoSessionHeaderPage'
+import WithSessionHeaderPage from '@features/Header/pages/WithSessionHeaderPage'
 import HomePage from '@pages/HomePage'
 import NotFound from '@pages/NotFound'
 
-import { lazy, Suspense, useContext, useEffect } from 'react'
-import { Outlet, Route, Routes } from 'react-router-dom'
+import { lazy, Suspense, useEffect } from 'react'
+import { Route, Routes } from 'react-router-dom'
 
 const StudentDastboard = lazy(() => import('@features/StudentDashboard'))
 const StudentPage = lazy(() => import('@features/ManageStudent'))
@@ -15,28 +15,21 @@ async function preloadPages() {
 }
 
 function App() {
-  const { setSession } = useContext(SessionContext)
   useEffect(() => {
-    setSession(0)
     preloadPages()
   }, [])
 
   return (
     <Suspense fallback='Waiting...'>
       <Routes>
-        <Route
-          path='/'
-          element={
-            <>
-              <Header />
-              <Outlet />
-            </>
-          }
-        >
+        <Route path='/' element={<NoSessionHeaderPage />}>
+          <Route index element={<HomePage />} />
+          <Route path='*' element={<NotFound />} />
+        </Route>
+        <Route path='session/:session' element={<WithSessionHeaderPage />}>
           <Route index element={<HomePage />} />
           <Route path='student-dashboard' element={<StudentDastboard />} />
-          <Route path='student/:id' element={<StudentPage />} />
-          <Route path='*' element={<NotFound />} />
+          <Route path='student/:student' element={<StudentPage />} />
         </Route>
       </Routes>
     </Suspense>
