@@ -1,23 +1,28 @@
 import InformationalGradesDialog from '../components/GradesDialog'
-import useStudent from '../hooks/useStudent'
 
+import { useSession, useStudent } from '@/hooks/useMyParams'
 import useSetTitle from '@hooks/useSetTitle'
 
 import { useState } from 'react'
 
 export default function StudentPage() {
-  const { student, status } = useStudent()
+  const { student, status: studentStatus } = useStudent()
+  const { status: sessionStatus } = useSession()
 
   const [openInformational, setOpenInformational] = useState(false)
-
-  if (status === 'failed') {
-    return <p>The student you are looking for does not exist</p>
-  }
 
   const title = student
     ? `${student.first_name} ${student.last_name} | CS 208 Ethics Project`
     : 'CS 208 Ethics Project'
   useSetTitle(title)
+
+  if (sessionStatus === 'failed') {
+    return <p>The session you have selected does not exist</p>
+  }
+
+  if (studentStatus === 'failed') {
+    return <p>The student you are looking for does not exist</p>
+  }
 
   return (
     <>
