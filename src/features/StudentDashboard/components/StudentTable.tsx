@@ -57,7 +57,7 @@ export default function StudentTable() {
   const [currStudent, setCurrStudent] = useState<Student | undefined>()
 
   return (
-    <div className='max-h-[36rem] sm:max-w-sm grow-[10] overflow-y-auto rounded border-4 '>
+    <div className='max-h-[20rem] grow-[10] overflow-y-auto rounded border-4'>
       <table className='w-full text-sm text-left text-gray-500'>
         <thead className='text-xs text-gray-700 uppercase bg-gray-200 sticky top-0'>
           <tr>
