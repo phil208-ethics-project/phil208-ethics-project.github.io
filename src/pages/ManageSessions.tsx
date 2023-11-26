@@ -16,6 +16,10 @@ function CreateSession() {
       <form
         onSubmit={async e => {
           e.preventDefault()
+          if (name === '') return
+          const repeat = await db.sessions.filter(s => s.name == name).count()
+          if (repeat != 0) return
+
           const id = await db.sessions.add({ date: Date.now(), name })
           setName('')
           navigate(`/session/${id}/change-session`)
