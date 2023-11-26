@@ -1,6 +1,7 @@
 import { db, Student } from '@db'
 import useDebounce from '@hooks/useDebounce'
 import useFocused from '@hooks/useFocused'
+import { useSession } from '@hooks/useMyParams'
 
 import { useLiveQuery } from 'dexie-react-hooks'
 import Fuse, { FuseResult } from 'fuse.js'
@@ -17,11 +18,13 @@ interface ItemProps {
 }
 
 function Item({ student }: ItemProps) {
+  const { id } = useSession()
+
   return (
     <Link
       tabIndex={0}
       className='block hover:bg-gray-100 rounded p-1 truncate'
-      to={`/student/${student.item.id}`}
+      to={`/session/${id}/student/${student.item.id}`}
     >
       {student.item.first_name} {student.item.last_name}
     </Link>
