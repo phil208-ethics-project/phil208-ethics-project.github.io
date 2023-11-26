@@ -1,11 +1,13 @@
 import Header from '../components/Header'
+import Navbar from '../components/Navbar'
 
 import { useSession } from '@hooks/useMyParams'
 
 import { Outlet } from 'react-router'
+import { Link } from 'react-router-dom'
 
 export default function WithSessionHeaderPage() {
-  const { status } = useSession()
+  const { status, id } = useSession()
 
   if (status == 'loading') {
     return (
@@ -26,7 +28,11 @@ export default function WithSessionHeaderPage() {
   }
   return (
     <>
-      <Header />
+      <Header>
+        <Navbar>
+          <Link to={`/session/${id}/student-dashboard`}>Student Dashboard</Link>
+        </Navbar>
+      </Header>
       <Outlet />
     </>
   )

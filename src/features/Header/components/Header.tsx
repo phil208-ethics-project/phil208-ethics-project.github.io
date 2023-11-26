@@ -1,5 +1,3 @@
-import Navbar from './Navbar'
-
 import exportCsv from '@features/SaveData/lib/exportCsv'
 import useOnClickOutside from '@hooks/useOnClickOutside'
 import useOnNavigate from '@hooks/useOnNavigate'
@@ -23,7 +21,11 @@ function Hamburger({ setOpen }: HamburgerProps) {
   )
 }
 
-export default function Header() {
+interface HeaderProps {
+  children?: React.ReactElement
+}
+
+export default function Header({ children }: HeaderProps) {
   const [open, setOpen] = useState(false)
   useOnNavigate(() => setOpen(false))
   const dropdownRef = useOnClickOutside<HTMLDivElement>(() => setOpen(false))
@@ -38,9 +40,7 @@ export default function Header() {
           Phil Project
         </Link>
         <Hamburger setOpen={setOpen} />
-        <div className='hidden sm:block'>
-          <Navbar />
-        </div>
+        <div className='hidden sm:block'>{children}</div>
         <button
           className='border-2 bg-white rounded p-2 hover:bg-gray-100 transition-colors text-xs text-gray-700 uppercase font-bold hidden sm:block'
           onClick={() => exportCsv()}
@@ -53,9 +53,7 @@ export default function Header() {
         data-open={open}
         className='sm:hidden flex flex-col top-16 left-0 absolute z-20 w-full transition-transform  data-[open=false]:pointer-events-none data-[open=false]:invisible data-[open=false]:-translate-y-[100%] '
       >
-        <div className='gap-4 p-4 bg-white shadow-lg'>
-          <Navbar />
-        </div>
+        <div className='gap-4 p-4 bg-white shadow-lg'>{children}</div>
       </div>
     </div>
   )
