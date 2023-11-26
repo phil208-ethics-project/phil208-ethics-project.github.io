@@ -31,6 +31,7 @@ export default function WithSessionHeaderPage() {
       <Header>
         <Navbar>
           <Link to={`/session/${id}/student-dashboard`}>Student Dashboard</Link>
+          <Link to={`/session/${id}/change-session`}>Change Session</Link>
         </Navbar>
       </Header>
       <Outlet />

@@ -41,7 +41,7 @@ export default function Header({ children }: HeaderProps) {
           <FaDatabase />
         </Link>
         <Hamburger setOpen={setOpen} />
-        <div className='hidden sm:block'>{children}</div>
+        <div className='hidden sm:block grow'>{children}</div>
         <button
           className='border-2 bg-white rounded p-2 hover:bg-gray-100 transition-colors text-xs text-gray-700 uppercase font-bold hidden sm:block'
           onClick={() => exportCsv()}
@@ -52,7 +52,7 @@ export default function Header({ children }: HeaderProps) {
 
       <div
         data-open={open}
-        className='sm:hidden flex flex-col top-16 left-0 absolute z-20 w-full transition-transform  data-[open=false]:pointer-events-none data-[open=false]:invisible data-[open=false]:-translate-y-[100%] '
+        className='sm:hidden top-16 left-0 absolute z-20 w-full transition-transform  data-[open=false]:pointer-events-none data-[open=false]:invisible data-[open=false]:-translate-y-[100%] '
       >
         <div className='gap-4 p-4 bg-white shadow-lg'>{children}</div>
       </div>
