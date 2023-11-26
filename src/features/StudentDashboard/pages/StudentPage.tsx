@@ -2,10 +2,14 @@ import NewStudentForm from '../components/NewStudentForm'
 import StudentTable from '../components/StudentTable'
 
 import FuzzyStudentSearch from '@components/FuzzyStudentSearch'
+import { useSession } from '@hooks/useMyParams'
 import useSetTitle from '@hooks/useSetTitle'
 
 export default function StudentDastboard() {
-  useSetTitle('Students | CS 208 Ethics Project')
+  const { status, id } = useSession()
+  const titleName = status == 'success' ? `(${id}) ` : ''
+
+  useSetTitle(`${titleName}Students | CS 208 Ethics Project`)
   return (
     <div>
       <div className='m-6'>

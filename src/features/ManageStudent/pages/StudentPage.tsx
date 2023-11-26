@@ -7,12 +7,13 @@ import { useState } from 'react'
 
 export default function StudentPage() {
   const { student, status: studentStatus } = useStudent()
-  const { status: sessionStatus } = useSession()
+  const { status: sessionStatus, id } = useSession()
 
   const [openInformational, setOpenInformational] = useState(false)
 
+  const titleName = sessionStatus == 'success' ? `(${id}) ` : ''
   const title = student
-    ? `${student.first_name} ${student.last_name} | CS 208 Ethics Project`
+    ? `${titleName}${student.first_name} ${student.last_name} | CS 208 Ethics Project`
     : 'CS 208 Ethics Project'
   useSetTitle(title)
 

@@ -1,5 +1,6 @@
 import { db } from '@db'
 import { useSession } from '@hooks/useMyParams'
+import useSetTitle from '@hooks/useSetTitle'
 
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
@@ -36,8 +37,11 @@ function CreateSession() {
 }
 
 export default function ManageSessions() {
-  const { status, session } = useSession()
+  const { status, session, id } = useSession()
   const navigate = useNavigate()
+
+  const titleName = status == 'success' ? `(${id}) ` : ''
+  useSetTitle(`${titleName}Sessions | CS 208 Ethics Project`)
 
   const sessions = useLiveQuery(() => db.sessions.toArray())
 
