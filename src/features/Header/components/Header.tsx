@@ -3,6 +3,7 @@ import useOnClickOutside from '@hooks/useOnClickOutside'
 import useOnNavigate from '@hooks/useOnNavigate'
 
 import { useState } from 'react'
+import { FaDatabase } from 'react-icons/fa'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { Link } from 'react-router-dom'
 
@@ -35,9 +36,9 @@ export default function Header({ children }: HeaderProps) {
       <div className='bg-slate-600 p-3 flex flex-row items-center relative z-30 justify-between'>
         <Link
           to='/'
-          className='text-4xl uppercase font-bold inline grow-0 whitespace-nowrap'
+          className='text-4xl uppercase font-bold inline grow-0 whitespace-nowrap flex-nowrap w-fit text-slate-900'
         >
-          Phil Project
+          <FaDatabase />
         </Link>
         <Hamburger setOpen={setOpen} />
         <div className='hidden sm:block'>{children}</div>
