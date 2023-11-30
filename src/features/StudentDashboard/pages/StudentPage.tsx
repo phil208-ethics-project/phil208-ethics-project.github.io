@@ -1,11 +1,14 @@
-import NewStudentForm from '../components/NewStudentForm'
-import StudentTable from '../components/StudentTable'
+// StudentDashboard.tsx
 
-import FuzzyStudentSearch from '@components/FuzzyStudentSearch'
-import useSetTitle from '@hooks/useSetTitle'
+import { Link } from 'react-router-dom';
+import NewStudentForm from '../components/NewStudentForm';
+import StudentTable from '../components/StudentTable';
+import FuzzyStudentSearch from '@components/FuzzyStudentSearch';
+import useSetTitle from '@hooks/useSetTitle';
 
-export default function StudentDastboard() {
-  useSetTitle('Students | CS 208 Ethics Project')
+export default function StudentDashboard() {
+  useSetTitle('Students | CS 208 Ethics Project');
+
   return (
     <div>
       <div className='m-6'>
@@ -15,6 +18,11 @@ export default function StudentDastboard() {
         <NewStudentForm />
         <StudentTable />
       </div>
+      
+      {/* Button to navigate to StudentBigTable */}
+      <Link to="/students">
+        <button className="bg-blue-500 text-white px-4 py-2 mt-4">Go to Student Table</button>
+      </Link>
     </div>
-  )
+  );
 }
