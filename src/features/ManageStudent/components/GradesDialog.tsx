@@ -4,7 +4,7 @@ import { db, FictionalGrade, InformationalGrade, Student, ReadingLevelGrade, Spe
 
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
-
+const readingLevels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 async function getInitalInformational(
   session_id: number,
   student_id: number,
@@ -54,7 +54,7 @@ async function getInitalReadingLevel(
   return {
     student_id,
     session_id,
-    reading_level: 0,
+    reading_level: '',
   };
 }
 
@@ -471,96 +471,26 @@ export default function GradesDialog({
             </td>
             <td>{spellingSum}</td>
           </tr>
-        </tbody>
-        <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b border-gray-100'>
-          <tr>
-            <th className='px-2 py-3'></th>
-            <th className='px-2 py-3'>0</th>
-            <th className='px-2 py-3'>1</th>
-            <th className='px-2 py-3'>2</th>
-            <th className='px-2 py-3'>3</th>
-            <th className='px-2 py-3'>4</th>
-            <th className='px-2 py-3'>5</th>
-            <th className='px-2 py-3'>6</th>
-            <th className='px-2 py-3'>7</th>
-          </tr>
-        </thead>
-        <tbody>
           <tr className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 dark:border-gray-700'>
-            <th className='px-2 py-3'>Reading</th>
-        <td>
-  <input
-    checked={readingLevelGrades?.reading_level ===0} // Adjust the value based on the checkbox value (0-7)
-    onChange={({  }) =>
-    setReadingLevelGrades(reading_level=> reading_level && { ...reading_level, reading_level: 0 })
-  }    type='checkbox'
-    className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-  />
-</td>
-<td>
-  <input
-    checked={readingLevelGrades?.reading_level === 1} // Adjust the value based on the checkbox value (0-7)
-    onChange={({  }) =>
-    setReadingLevelGrades(reading_level=> reading_level && { ...reading_level, reading_level: 1 })
-  }    type='checkbox'
-    className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-  />
-</td>
-<td>
-  <input
-    checked={readingLevelGrades?.reading_level === 2} // Adjust the value based on the checkbox value (0-7)
-    onChange={({  }) =>
-    setReadingLevelGrades(reading_level=> reading_level && { ...reading_level, reading_level: 2 })
-  }    type='checkbox'
-    className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-  />
-</td>
-<td>
-  <input
-    checked={readingLevelGrades?.reading_level === 3} // Adjust the value based on the checkbox value (0-7)
-    onChange={({ target }) =>
-    setReadingLevelGrades(reading_level=> reading_level && { ...reading_level, reading_level: 3 })
-  }    type='checkbox'
-    className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-  />
-</td>
-<td>
-  <input
-    checked={readingLevelGrades?.reading_level === 4} // Adjust the value based on the checkbox value (0-7)
-    onChange={({  }) =>
-    setReadingLevelGrades(reading_level=> reading_level && { ...reading_level, reading_level: 4 })
-  }    type='checkbox'
-    className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-  />
-</td>
-<td>
-  <input
-    checked={readingLevelGrades?.reading_level === 5} // Adjust the value based on the checkbox value (0-7)
-    onChange={({  }) =>
-    setReadingLevelGrades(reading_level=> reading_level && { ...reading_level, reading_level: 5 })
-  }    type='checkbox'
-    className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-  />
-</td>
-<td>
-  <input
-    checked={readingLevelGrades?.reading_level === 6} // Adjust the value based on the checkbox value (0-7)
-    onChange={({ target }) =>
-    setReadingLevelGrades(reading_level=> reading_level && { ...reading_level, reading_level: 6 })
-  }    type='checkbox'
-    className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-  />
-</td>
-<td>
-  <input
-    checked={readingLevelGrades?.reading_level === 7} // Adjust the value based on the checkbox value (0-7)
-    onChange={({  }) =>
-    setReadingLevelGrades(reading_level=> reading_level && { ...reading_level, reading_level: 7 })
-  }    type='checkbox'
-    className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-  />
-</td>
+  <th className='px-2 py-3'>Reading</th>
+  <td>
+    <select
+      id={`readingLevelDropdown`}
+      value={readingLevelGrades?.reading_level || ''}
+      onChange={(e) =>
+        setReadingLevelGrades(reading_level => reading_level && { ...reading_level, reading_level: e.target.value })
+      }
+      className='p-2 border'
+    >
+      {readingLevels.map((level, index) => (
+        <option key={index} value={level}>
+          {level}
+        </option>
+      ))}
+    </select>
+  </td>
 </tr>
+
         </tbody>
 
       </table>

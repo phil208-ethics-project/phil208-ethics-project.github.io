@@ -56,7 +56,7 @@ export interface SpellingGrade {
 export interface ReadingLevelGrade {
   session_id: number
   student_id: number
-  reading_level: number
+  reading_level: string
 }
 
 export class StudentGradesDB extends Dexie {

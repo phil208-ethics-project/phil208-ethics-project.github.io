@@ -12,8 +12,8 @@ function StudentTablePage() {
   const [informationalGradeMin, setInformationalGradeMin] = useState(0);
   const [informationalGradeMax, setInformationalGradeMax] = useState(7);
   // State for reading grade level filter range
-  const [readingGradeLevelMin, setReadingGradeLevelMin] = useState(0);
-  const [readingGradeLevelMax, setReadingGradeLevelMax] = useState(7);
+  const [readingGradeLevelMin, setReadingGradeLevelMin] = useState('A');
+  const [readingGradeLevelMax, setReadingGradeLevelMax] = useState('Z');
   // State for holding students with letter level even if other scores are outside filter ranges
   const [holdStudentsWithLetterLevel, setHoldStudentsWithLetterLevel] = useState(false);
   // Retrieve the student data using useLiveQuery
@@ -43,7 +43,7 @@ function StudentTablePage() {
       fictional_grade_count: countTrueValues(studentFictionalGrade),
       informational_grade_count: countTrueValues(studentInformationalGrade),
       spelling_grade_count: countTrueValues(studentSpellingGrade),
-      reading_grade_level_count: studentReadingLevelGrade?.reading_level || 0,
+      reading_grade_level_count: studentReadingLevelGrade?.reading_level || 'A',
     };
   });
 
@@ -159,10 +159,10 @@ function StudentTablePage() {
             <select
               id='readingGradeLevelMin'
               value={readingGradeLevelMin}
-              onChange={(e) => setReadingGradeLevelMin(Number(e.target.value))}
+              onChange={(e) => setReadingGradeLevelMin(String(e.target.value))}
               className='p-2 border'
             >
-              {[0, 1, 2, 3, 4, 5, 6, 7].map((value) => (
+              {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'].map((value) => (
                 <option key={value} value={value}>
                   {value}
                 </option>
@@ -174,10 +174,10 @@ function StudentTablePage() {
             <select
               id='readingGradeLevelMax'
               value={readingGradeLevelMax}
-              onChange={(e) => setReadingGradeLevelMax(Number(e.target.value))}
+              onChange={(e) => setReadingGradeLevelMax(String(e.target.value))}
               className='p-2 border'
             >
-              {[0, 1, 2, 3, 4, 5, 6, 7].map((value) => (
+              {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'].map((value) => (
                 <option key={value} value={value}>
                   {value}
                 </option>
