@@ -43,6 +43,9 @@ devDependencies:
   '@types/file-saver':
     specifier: ^2.0.7
     version: 2.0.7
+  '@types/papaparse':
+    specifier: ^5.3.14
+    version: 5.3.14
   '@types/postcss-js':
     specifier: ^4.0.4
     version: 4.0.4
@@ -618,6 +621,12 @@ packages:
     resolution: {integrity: sha512-HhmzZh5LSJNS5O8jQKpJ/3ZcrrlG6L70hpGqMIAoM9YVD0YBRNWYsfwcXq8VnSjlNpCpgLzMXdiPo+dxcvSmiA==}
     dependencies:
       undici-types: 5.26.5
+    dev: true
+
+  /@types/papaparse@5.3.14:
+    resolution: {integrity: sha512-LxJ4iEFcpqc6METwp9f6BV6VVc43m6MfH0VqFosHvrUgfXiFe6ww7R3itkOQ+TCK6Y+Iv/+RnnvtRZnkc5Kc9g==}
+    dependencies:
+      '@types/node': 20.9.1
     dev: true
 
   /@types/postcss-js@4.0.4:
