@@ -35,7 +35,7 @@ export default function Header() {
           to='/'
           className='text-4xl uppercase font-bold inline grow-0 whitespace-nowrap'
         >
-          Phil Project
+          <img src='favicon.ico' className='w-16' />
         </Link>
         <Hamburger setOpen={setOpen} />
         <div className='hidden sm:block'>
