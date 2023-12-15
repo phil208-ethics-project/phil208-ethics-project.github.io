@@ -95,6 +95,7 @@ function StudentTablePage() {
     if (holdStudentsWithLetterLevel) {
       // Highlight out-of-bounds grades with red
       if (isReadingGradeLevelValid) {
+        //TODO: Implement
       } else {
         return false
       }
@@ -113,15 +114,15 @@ function StudentTablePage() {
   })
 
   return (
-    <div className='items-center min-h-screen overflow-x-hidden'>
-      <div className='flex-grow overflow-y-auto rounded border-4'>
+    <div className='items-center min-h-screen overflow-x-hidden p-8'>
+      <div className='flex-grow rounded'>
         {/* Search input */}
         <input
           type='text'
           placeholder='Search by ID, First Name, or Last Name'
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
-          className='p-2 mb-4 w-full'
+          className='p-2 mb-4 w-full rounded-full px-4 '
         />
 
         {/* Filtering options */}
@@ -247,7 +248,7 @@ function StudentTablePage() {
         </div>
 
         {/* Student table */}
-        <table className='w-full text-sm text-left text-gray-500'>
+        <table className='text-sm text-left text-gray-500 max-w-screen-md border-4 rounded'>
           <thead className='text-xs text-gray-700 uppercase bg-gray-200 sticky top-0'>
             <tr>
               <th className='px-6 py-3 text-center'>ID</th>
