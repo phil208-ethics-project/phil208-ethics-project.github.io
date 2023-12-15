@@ -4,41 +4,15 @@ import {
   db,
   FictionalGrade,
   InformationalGrade,
-  Student,
   ReadingLevelGrade,
+  readingLevels,
   SpellingGrade,
+  Student,
 } from '@db'
 
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
-const readingLevels = [
-  'A',
-  'B',
-  'C',
-  'D',
-  'E',
-  'F',
-  'G',
-  'H',
-  'I',
-  'J',
-  'K',
-  'L',
-  'M',
-  'N',
-  'O',
-  'P',
-  'Q',
-  'R',
-  'S',
-  'T',
-  'U',
-  'V',
-  'W',
-  'X',
-  'Y',
-  'Z',
-]
+
 async function getInitalInformational(
   session_id: number,
   student_id: number,
@@ -559,7 +533,7 @@ export default function GradesDialog({
                       },
                   )
                 }
-                className='p-2 border'
+                className='m-2 rounded border-gray-300 focus:ring-emerald-500  focus:ring-2 focus:border-transparent bg-gray-100'
               >
                 {readingLevels.map((level, index) => (
                   <option key={index} value={level}>

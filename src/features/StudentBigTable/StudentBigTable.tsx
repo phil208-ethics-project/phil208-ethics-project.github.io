@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
 import {
   db,
-  Student,
   FictionalGrade,
   InformationalGrade,
-  SpellingGrade,
   ReadingLevelGrade,
+  readingLevels,
+  SpellingGrade,
 } from '@db'
+
 import { useLiveQuery } from 'dexie-react-hooks'
+import { useState } from 'react'
 
 function StudentTablePage() {
   // State for the search term
@@ -131,7 +132,7 @@ function StudentTablePage() {
               id='fictionalGradeMin'
               value={fictionalGradeMin}
               onChange={e => setFictionalGradeMin(Number(e.target.value))}
-              className='p-2 border'
+              className='m-2 rounded border-gray-300 focus:ring-emerald-500  focus:ring-2 focus:border-transparent bg-gray-100'
             >
               {[0, 1, 2, 3, 4, 5, 6, 7].map(value => (
                 <option key={value} value={value}>
@@ -146,7 +147,7 @@ function StudentTablePage() {
               id='fictionalGradeMax'
               value={fictionalGradeMax}
               onChange={e => setFictionalGradeMax(Number(e.target.value))}
-              className='p-2 border'
+              className='m-2 rounded border-gray-300 focus:ring-emerald-500  focus:ring-2 focus:border-transparent bg-gray-100'
             >
               {[0, 1, 2, 3, 4, 5, 6, 7].map(value => (
                 <option key={value} value={value}>
@@ -165,7 +166,7 @@ function StudentTablePage() {
               id='informationalGradeMin'
               value={informationalGradeMin}
               onChange={e => setInformationalGradeMin(Number(e.target.value))}
-              className='p-2 border'
+              className='m-2 rounded border-gray-300 focus:ring-emerald-500  focus:ring-2 focus:border-transparent bg-gray-100'
             >
               {[0, 1, 2, 3, 4, 5, 6, 7].map(value => (
                 <option key={value} value={value}>
@@ -182,7 +183,7 @@ function StudentTablePage() {
               id='informationalGradeMax'
               value={informationalGradeMax}
               onChange={e => setInformationalGradeMax(Number(e.target.value))}
-              className='p-2 border'
+              className='m-2 rounded border-gray-300 focus:ring-emerald-500  focus:ring-2 focus:border-transparent bg-gray-100'
             >
               {[0, 1, 2, 3, 4, 5, 6, 7].map(value => (
                 <option key={value} value={value}>
@@ -201,36 +202,9 @@ function StudentTablePage() {
               id='readingGradeLevelMin'
               value={readingGradeLevelMin}
               onChange={e => setReadingGradeLevelMin(String(e.target.value))}
-              className='p-2 border'
+              className='m-2 rounded border-gray-300 focus:ring-emerald-500  focus:ring-2 focus:border-transparent bg-gray-100'
             >
-              {[
-                'A',
-                'B',
-                'C',
-                'D',
-                'E',
-                'F',
-                'G',
-                'H',
-                'I',
-                'J',
-                'K',
-                'L',
-                'M',
-                'N',
-                'O',
-                'P',
-                'Q',
-                'R',
-                'S',
-                'T',
-                'U',
-                'V',
-                'W',
-                'X',
-                'Y',
-                'Z',
-              ].map(value => (
+              {readingLevels.map(value => (
                 <option key={value} value={value}>
                   {value}
                 </option>
@@ -245,36 +219,9 @@ function StudentTablePage() {
               id='readingGradeLevelMax'
               value={readingGradeLevelMax}
               onChange={e => setReadingGradeLevelMax(String(e.target.value))}
-              className='p-2 border'
+              className='m-2 rounded border-gray-300 focus:ring-emerald-500  focus:ring-2 focus:border-transparent bg-gray-100'
             >
-              {[
-                'A',
-                'B',
-                'C',
-                'D',
-                'E',
-                'F',
-                'G',
-                'H',
-                'I',
-                'J',
-                'K',
-                'L',
-                'M',
-                'N',
-                'O',
-                'P',
-                'Q',
-                'R',
-                'S',
-                'T',
-                'U',
-                'V',
-                'W',
-                'X',
-                'Y',
-                'Z',
-              ].map(value => (
+              {readingLevels.map(value => (
                 <option key={value} value={value}>
                   {value}
                 </option>
@@ -291,7 +238,7 @@ function StudentTablePage() {
               onChange={() =>
                 setHoldStudentsWithLetterLevel(!holdStudentsWithLetterLevel)
               }
-              className='mr-2'
+              className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
             />
             <label htmlFor='holdStudentsWithLetterLevel'>
               Hold Students with Letter Level
