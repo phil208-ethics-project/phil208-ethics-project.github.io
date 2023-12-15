@@ -1,10 +1,44 @@
 import Dialog from '@components/Dialog'
 import { SessionContext } from '@components/SessionContext'
-import { db, FictionalGrade, InformationalGrade, Student, ReadingLevelGrade, SpellingGrade } from '@db'
+import {
+  db,
+  FictionalGrade,
+  InformationalGrade,
+  Student,
+  ReadingLevelGrade,
+  SpellingGrade,
+} from '@db'
 
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
-const readingLevels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+const readingLevels = [
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+  'Z',
+]
 async function getInitalInformational(
   session_id: number,
   student_id: number,
@@ -49,13 +83,13 @@ async function getInitalReadingLevel(
   session_id: number,
   student_id: number,
 ): Promise<ReadingLevelGrade> {
-  const result = await db.reading_grades.get([session_id, student_id]);
-  if (result) return result;
+  const result = await db.reading_grades.get([session_id, student_id])
+  if (result) return result
   return {
     student_id,
     session_id,
     reading_level: '',
-  };
+  }
 }
 
 async function getInitialSpelling(
@@ -63,7 +97,7 @@ async function getInitialSpelling(
   student_id: number,
 ): Promise<SpellingGrade> {
   const result = await db.spelling_grades.get([session_id, student_id])
-  if (result) return result;
+  if (result) return result
   return {
     student_id,
     session_id,
@@ -77,7 +111,6 @@ async function getInitialSpelling(
     advanced_multisyllabic_words_3_syllabes: false,
   }
 }
-
 
 interface GradesDialogProps {
   isOpen: boolean
@@ -120,8 +153,7 @@ export default function GradesDialog({
         +fictionalGrades.v) ||
     0
 
-    const [spellingGrades, setSpellingGrades] =
-    useState<SpellingGrade>()
+  const [spellingGrades, setSpellingGrades] = useState<SpellingGrade>()
   const spellingSum =
     (spellingGrades &&
       +spellingGrades.phonetic_short_vowels +
@@ -134,28 +166,27 @@ export default function GradesDialog({
         +spellingGrades.advanced_multisyllabic_words_3_syllabes) ||
     0
 
-    const [readingLevelGrades, setReadingLevelGrades] = useState<ReadingLevelGrade>();  
+  const [readingLevelGrades, setReadingLevelGrades] =
+    useState<ReadingLevelGrade>()
   useEffect(() => {
-    if (!isOpen) return;
-    const session_id = session ?? NaN;
+    if (!isOpen) return
+    const session_id = session ?? NaN
     if (student?.id == null || isNaN(session_id)) {
-      return navigate('/');
+      return navigate('/')
     }
-    getInitalInformational(session_id, student.id).then((v) => {
-      setInformationalGrades(v);
-    });
-    getInitalFictional(session_id, student.id).then((v) => {
-      setFictionalGrades(v);
-    });
-    getInitialSpelling(session_id, student.id).then((v) => {
-      setSpellingGrades(v);
-    });
-    getInitalReadingLevel(session_id, student.id).then((v) => {
-      setReadingLevelGrades(v);
-    });
-  }, [isOpen, navigate]);
-  
-  
+    getInitalInformational(session_id, student.id).then(v => {
+      setInformationalGrades(v)
+    })
+    getInitalFictional(session_id, student.id).then(v => {
+      setFictionalGrades(v)
+    })
+    getInitialSpelling(session_id, student.id).then(v => {
+      setSpellingGrades(v)
+    })
+    getInitalReadingLevel(session_id, student.id).then(v => {
+      setReadingLevelGrades(v)
+    })
+  }, [isOpen, navigate])
 
   return (
     <Dialog exit={exit} isOpen={isOpen}>
@@ -369,7 +400,6 @@ export default function GradesDialog({
             </td>
             <td>{fictionalSum}</td>
           </tr>
-          
         </tbody>
         <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b border-gray-100'>
           <tr>
@@ -393,7 +423,9 @@ export default function GradesDialog({
               <input
                 checked={spellingGrades?.phonetic_short_vowels ?? false}
                 onChange={({ target }) =>
-                  setSpellingGrades(v => v && { ...v, phonetic_short_vowels: target.checked })
+                  setSpellingGrades(
+                    v => v && { ...v, phonetic_short_vowels: target.checked },
+                  )
                 }
                 type='checkbox'
                 className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
@@ -403,7 +435,10 @@ export default function GradesDialog({
               <input
                 checked={spellingGrades?.phonetic_consonant_blends ?? false}
                 onChange={({ target }) =>
-                  setSpellingGrades(v => v && { ...v, phonetic_consonant_blends: target.checked })
+                  setSpellingGrades(
+                    v =>
+                      v && { ...v, phonetic_consonant_blends: target.checked },
+                  )
                 }
                 type='checkbox'
                 className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
@@ -413,7 +448,13 @@ export default function GradesDialog({
               <input
                 checked={spellingGrades?.phonetic_consonant_digraphs ?? false}
                 onChange={({ target }) =>
-                  setSpellingGrades(v => v && { ...v, phonetic_consonant_digraphs: target.checked })
+                  setSpellingGrades(
+                    v =>
+                      v && {
+                        ...v,
+                        phonetic_consonant_digraphs: target.checked,
+                      },
+                  )
                 }
                 type='checkbox'
                 className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
@@ -423,7 +464,10 @@ export default function GradesDialog({
               <input
                 checked={spellingGrades?.transitional_long_vowels ?? false}
                 onChange={({ target }) =>
-                  setSpellingGrades(v => v && { ...v, transitional_long_vowels: target.checked })
+                  setSpellingGrades(
+                    v =>
+                      v && { ...v, transitional_long_vowels: target.checked },
+                  )
                 }
                 type='checkbox'
                 className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
@@ -433,7 +477,13 @@ export default function GradesDialog({
               <input
                 checked={spellingGrades?.transitional_complex_vowels ?? false}
                 onChange={({ target }) =>
-                  setSpellingGrades(v => v && { ...v, transitional_complex_vowels: target.checked })
+                  setSpellingGrades(
+                    v =>
+                      v && {
+                        ...v,
+                        transitional_complex_vowels: target.checked,
+                      },
+                  )
                 }
                 type='checkbox'
                 className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
@@ -443,7 +493,13 @@ export default function GradesDialog({
               <input
                 checked={spellingGrades?.fluent_inflectional_endings ?? false}
                 onChange={({ target }) =>
-                  setSpellingGrades(v => v && { ...v, fluent_inflectional_endings: target.checked })
+                  setSpellingGrades(
+                    v =>
+                      v && {
+                        ...v,
+                        fluent_inflectional_endings: target.checked,
+                      },
+                  )
                 }
                 type='checkbox'
                 className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
@@ -451,9 +507,17 @@ export default function GradesDialog({
             </td>
             <td>
               <input
-                checked={spellingGrades?.fluent_multisyllabic_words_2_syllabes ?? false}
+                checked={
+                  spellingGrades?.fluent_multisyllabic_words_2_syllabes ?? false
+                }
                 onChange={({ target }) =>
-                  setSpellingGrades(v => v && { ...v, fluent_multisyllabic_words_2_syllabes: target.checked })
+                  setSpellingGrades(
+                    v =>
+                      v && {
+                        ...v,
+                        fluent_multisyllabic_words_2_syllabes: target.checked,
+                      },
+                  )
                 }
                 type='checkbox'
                 className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
@@ -461,9 +525,18 @@ export default function GradesDialog({
             </td>
             <td>
               <input
-                checked={spellingGrades?.advanced_multisyllabic_words_3_syllabes ?? false}
+                checked={
+                  spellingGrades?.advanced_multisyllabic_words_3_syllabes ??
+                  false
+                }
                 onChange={({ target }) =>
-                  setSpellingGrades(v => v && { ...v, advanced_multisyllabic_words_3_syllabes: target.checked })
+                  setSpellingGrades(
+                    v =>
+                      v && {
+                        ...v,
+                        advanced_multisyllabic_words_3_syllabes: target.checked,
+                      },
+                  )
                 }
                 type='checkbox'
                 className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
@@ -472,27 +545,31 @@ export default function GradesDialog({
             <td>{spellingSum}</td>
           </tr>
           <tr className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 dark:border-gray-700'>
-  <th className='px-2 py-3'>Reading</th>
-  <td>
-    <select
-      id={`readingLevelDropdown`}
-      value={readingLevelGrades?.reading_level || ''}
-      onChange={(e) =>
-        setReadingLevelGrades(reading_level => reading_level && { ...reading_level, reading_level: e.target.value })
-      }
-      className='p-2 border'
-    >
-      {readingLevels.map((level, index) => (
-        <option key={index} value={level}>
-          {level}
-        </option>
-      ))}
-    </select>
-  </td>
-</tr>
-
+            <th className='px-2 py-3'>Reading</th>
+            <td>
+              <select
+                id={`readingLevelDropdown`}
+                value={readingLevelGrades?.reading_level || ''}
+                onChange={e =>
+                  setReadingLevelGrades(
+                    reading_level =>
+                      reading_level && {
+                        ...reading_level,
+                        reading_level: e.target.value,
+                      },
+                  )
+                }
+                className='p-2 border'
+              >
+                {readingLevels.map((level, index) => (
+                  <option key={index} value={level}>
+                    {level}
+                  </option>
+                ))}
+              </select>
+            </td>
+          </tr>
         </tbody>
-
       </table>
       <button
         className='border-2 rounded p-2 hover:bg-gray-100 transition-colors text-xs text-gray-700 uppercase font-bold m-2'
@@ -500,8 +577,7 @@ export default function GradesDialog({
           informationalGrades &&
             db.informational_grades.put(informationalGrades)
           fictionalGrades && db.fictional_grades.put(fictionalGrades)
-          spellingGrades &&
-            db.spelling_grades.put(spellingGrades)
+          spellingGrades && db.spelling_grades.put(spellingGrades)
           readingLevelGrades && db.reading_grades.put(readingLevelGrades)
           exit()
         }}

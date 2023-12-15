@@ -1,1 +1,1 @@
-export { default } from './StudentBigTable';
+export { default } from './StudentBigTable'
