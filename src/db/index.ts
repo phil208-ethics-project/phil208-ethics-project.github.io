@@ -1,5 +1,34 @@
 import Dexie, { Table } from 'dexie'
 
+export const readingLevels = [
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+  'Z',
+]
+
 export interface Session {
   id?: number
   date: number
@@ -43,20 +72,20 @@ export interface InformationalGrade {
 export interface SpellingGrade {
   session_id: number
   student_id: number
-  phonetic_short_vowels: string
-  phonetic_consonant_blends: string
-  phonetic_consonant_digraphs: string
-  transitional_long_vowels: string
-  transitional_complex_vowels: string
-  fluent_inflectional_endings: string
-  fluent_multisyllabic_words_2_syllabes: string
-  advanced_multisyllabic_words_3_syllabes: string
+  phonetic_short_vowels: boolean
+  phonetic_consonant_blends: boolean
+  phonetic_consonant_digraphs: boolean
+  transitional_long_vowels: boolean
+  transitional_complex_vowels: boolean
+  fluent_inflectional_endings: boolean
+  fluent_multisyllabic_words_2_syllabes: boolean
+  advanced_multisyllabic_words_3_syllabes: boolean
 }
 
 export interface ReadingLevelGrade {
   session_id: number
   student_id: number
-  reading_level: number
+  reading_level: string
 }
 
 export class StudentGradesDB extends Dexie {
