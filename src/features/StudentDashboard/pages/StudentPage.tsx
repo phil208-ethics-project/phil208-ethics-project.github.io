@@ -171,7 +171,7 @@ async function onUpload(files: FileList) {
           break;
         
         default:
-          console.log('Lets throw an error here describing whats wrong?');
+          console.error('Columns dont match expected schema');
       }
     } catch(e) {
       console.log(e)
