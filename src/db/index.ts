@@ -1,4 +1,5 @@
 import Dexie, { Table } from 'dexie'
+import { z } from 'zod'
 
 export interface Session {
   id?: number
@@ -6,13 +7,15 @@ export interface Session {
   name?: string
 }
 
-export interface Student {
-  id?: number
-  first_name: string
-  last_name: string
-  gender: 'male' | 'female' | 'nonbinary' | 'other'
-  age: number
-}
+export const studentSchema = z.object({
+  id: z.number().optional(),
+  first_name: z.string(),
+  last_name: z.string(),
+  age: z.number(),
+  gender: z.enum(['male', 'female', 'nonbinary', 'other']),
+})
+
+export type Student = z.infer<typeof studentSchema>
 
 export interface FictionalGrade {
   session_id: number
