@@ -33,7 +33,7 @@ export default function FileUpload({ onUpload }: FileUploadProps) {
         ref={fileUploadElement}
         className='hidden'
         type='file'
-        accept='.csv'
+        accept='.csv,.zip'
         multiple
         onChange={e => {
           const target = e.target as HTMLInputElement & { files: FileList }
