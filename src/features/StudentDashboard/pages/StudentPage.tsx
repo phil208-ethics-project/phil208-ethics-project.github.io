@@ -5,6 +5,7 @@ import FuzzyStudentSearch from '@components/FuzzyStudentSearch'
 import {
   db,
   FictionalGrade,
+  fictionalGradeSchema,
   InformationalGrade,
   ReadingLevelGrade,
   SpellingGrade,
@@ -102,12 +103,24 @@ async function onUpload(files: FileList) {
         }, {})
       })
 
-      const studentResult = z.array(studentSchema).safeParse(csvDict)
-      if (studentResult.success == true) {
-        studentResult.data
+      // this can definitely be more efficient but we're trying to make a deadline.
+      const studentParsing = z.array(studentSchema).safeParse(csvDict)
+      const fictionalParsing = z.array(fictionalGradeSchema).safeParse(csvDict)
+      // REPEAT FOR ALL THE OTHERS
+
+      // DO IF STATEMENTS TO PROCESS EACH TYPE, IN ESSENCE REPLICATING THE SWITCH BELOW
+      if (studentParsing.success == true) {
+        studentParsing.data
       }
 
       console.log('csvDict', csvDict)
+
+
+
+
+
+
+
 
       console.log(filename, data)
       const columns: string = parsed.data[0].sort().toString()
