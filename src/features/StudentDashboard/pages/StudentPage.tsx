@@ -4,12 +4,10 @@ import StudentTable from '../components/StudentTable'
 import FuzzyStudentSearch from '@components/FuzzyStudentSearch'
 import {
   db,
-  FictionalGrade,
   fictionalGradeSchema,
-  InformationalGrade,
-  ReadingLevelGrade,
-  SpellingGrade,
-  Student,
+  informationalGradeSchema,
+  readingLevelSchema,
+  spellingGradeSchema,
   studentSchema,
 } from '@db'
 import FileUpload from '@features/SaveData/components/FileUpload'
@@ -32,56 +30,6 @@ async function onUpload(files: FileList) {
 
   await Promise.all(analyzeFiles)
 
-  // Table Schemas
-  const student: string = ['first_name', 'last_name', 'gender', 'age']
-    .sort()
-    .toString()
-  const fictionalGrade: string = [
-    'session_id',
-    'student_id',
-    'v',
-    'kd',
-    'ca',
-    'i',
-    'e',
-    'l',
-    'go',
-    'mi',
-  ]
-    .sort()
-    .toString()
-  const informationalGrade: string = [
-    'session_id',
-    'student_id',
-    'v',
-    'kd',
-    'ar',
-    'i',
-    'e',
-    'l',
-    'tf',
-    'mi',
-  ]
-    .sort()
-    .toString()
-  const spellingGrade: string = [
-    'session_id',
-    'student_id',
-    'phonetic_short_vowels',
-    'phonetic_consonant_blends',
-    'phonetic_consonant_digraphs',
-    'transitional_long_vowels',
-    'transitional_complex_vowels',
-    'fluent_inflectional_endings',
-    'fluent_multisyllabic_words_2_syllabes',
-    'advanced_multisyllabic_words_3_syllabes',
-  ]
-    .sort()
-    .toString()
-  const readingLevel: string = ['session_id', 'student_id', 'reading_level']
-    .sort()
-    .toString()
-
   for (const [filename, text] of Object.entries(fileText)) {
     try {
       const parsed = parse<unknown>(text)
@@ -103,117 +51,42 @@ async function onUpload(files: FileList) {
         }, {})
       })
 
-      // this can definitely be more efficient but we're trying to make a deadline.
-      const studentParsing = z.array(studentSchema).safeParse(csvDict)
-      const fictionalParsing = z.array(fictionalGradeSchema).safeParse(csvDict)
-      // REPEAT FOR ALL THE OTHERS
-
-      // DO IF STATEMENTS TO PROCESS EACH TYPE, IN ESSENCE REPLICATING THE SWITCH BELOW
-      if (studentParsing.success == true) {
-        studentParsing.data
+      // Check all tables on zod schema and parse file
+      const studentParsed = z.array(studentSchema).safeParse(csvDict)
+      if (studentParsed.success == true) {
+        await db.students.bulkAdd(studentParsed.data)
+        continue
       }
 
-      console.log('csvDict', csvDict)
-
-
-
-
-
-
-
-
-      console.log(filename, data)
-      const columns: string = parsed.data[0].sort().toString()
-      console.log('hellooooooo')
-      console.log(parsed.data)
-      console.log(columns)
-
-      switch (columns) {
-        case student:
-          // NOTE FOR MAX REVIEW
-          // If an error occurs at this point, either type inference fails or column order fails
-          // Can we make this so we depend less on column order?
-
-          // NOTE FOR MAX REVIEW
-          // I think the export student thing is exporting the header twice
-          const students: Student[] = parsed.data.map(arr => ({
-            first_name: arr[0],
-            last_name: arr[1],
-            age: arr[2],
-            gender: arr[3],
-          }))
-          db.students.bulkAdd(students)
-          break
-
-        case fictionalGrade:
-          // NOTE FOR MAX REVIEW
-          // I think this is throiwng errors because the false's are encoded to empty strings?
-          const fictionalGrades: FictionalGrade[] = parsed.data.map(arr => ({
-            session_id: arr[0],
-            student_id: arr[1],
-            v: arr[2],
-            kd: arr[3],
-            ca: arr[4],
-            i: arr[5],
-            e: arr[6],
-            l: arr[7],
-            go: arr[8],
-            mi: arr[9],
-          }))
-          console.log(fictionalGrades)
-          db.fictional_grades.bulkAdd(fictionalGrades)
-          break
-
-        case informationalGrade:
-          // NOTE FOR MAX REVIEW
-          // I think this is throiwng errors because the false's are encoded to empty strings?
-          const informationalGrades: InformationalGrade[] = parsed.data.map(
-            arr => ({
-              session_id: arr[0],
-              student_id: arr[1],
-              v: arr[2],
-              kd: arr[3],
-              ar: arr[4],
-              i: arr[5],
-              e: arr[6],
-              l: arr[7],
-              tf: arr[8],
-              mi: arr[9],
-            }),
-          )
-          db.informational_grades.bulkAdd(informationalGrades)
-          break
-
-        case spellingGrade:
-          const spellingGrades: SpellingGrade[] = parsed.data.map(arr => ({
-            session_id: arr[0],
-            student_id: arr[1],
-            phonetic_short_vowels: arr[2],
-            phonetic_consonant_blends: arr[3],
-            phonetic_consonant_digraphs: arr[4],
-            transitional_long_vowels: arr[5],
-            transitional_complex_vowels: arr[6],
-            fluent_inflectional_endings: arr[7],
-            fluent_multisyllabic_words_2_syllabes: arr[8],
-            advanced_multisyllabic_words_3_syllabes: arr[9],
-          }))
-          db.spelling_grades.bulkAdd(spellingGrades)
-          break
-
-        case readingLevel:
-          const readingLevels: ReadingLevelGrade[] = parsed.data.map(arr => ({
-            session_id: arr[0],
-            student_id: arr[1],
-            reading_level: arr[2],
-          }))
-          db.reading_grades.bulkAdd(readingLevels)
-          break
-
-        default:
-          console.error('Columns dont match expected schema');
+      const readingParsed = z.array(readingLevelSchema).safeParse(csvDict)
+      if (readingParsed.success) {
+        await db.reading_grades.bulkAdd(readingParsed.data)
+        continue
       }
+
+      const spellingParsed = z.array(spellingGradeSchema).safeParse(csvDict)
+      if (spellingParsed.success) {
+        await db.spelling_grades.bulkAdd(spellingParsed.data)
+        continue
+      }
+
+      const informationalParsed = z
+        .array(informationalGradeSchema)
+        .safeParse(csvDict)
+      if (informationalParsed.success) {
+        await db.informational_grades.bulkAdd(informationalParsed.data)
+        continue
+      }
+
+      const fictionalParsed = z.array(fictionalGradeSchema).safeParse(csvDict)
+      if (fictionalParsed.success) {
+        await db.fictional_grades.bulkAdd(fictionalParsed.data)
+        continue
+      }
+
+      throw new Error(`Failed to parse ${filename}`)
     } catch (e) {
-      console.log(e)
+      console.error(e)
     }
   }
 }
