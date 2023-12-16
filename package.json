@@ -27,7 +27,8 @@
     "react-dom": "^18.2.0",
     "react-router": "^6.19.0",
     "react-router-dom": "^6.19.0",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zof": "^0.0.0"
   },
   "eslintConfig": {
     "extends": [
