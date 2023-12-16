@@ -20,6 +20,9 @@ dependencies:
   jszip:
     specifier: ^3.10.1
     version: 3.10.1
+  papaparse:
+    specifier: ^5.2.0
+    version: 5.4.1
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -32,6 +35,12 @@ dependencies:
   react-router-dom:
     specifier: ^6.19.0
     version: 6.19.0(react-dom@18.2.0)(react@18.2.0)
+  zod:
+    specifier: ^3.22.4
+    version: 3.22.4
+  zof:
+    specifier: ^0.0.0
+    version: 0.0.0
 
 devDependencies:
   '@tailwindcss/forms':
@@ -40,6 +49,9 @@ devDependencies:
   '@types/file-saver':
     specifier: ^2.0.7
     version: 2.0.7
+  '@types/papaparse':
+    specifier: ^5.3.14
+    version: 5.3.14
   '@types/postcss-js':
     specifier: ^4.0.4
     version: 4.0.4
@@ -615,6 +627,12 @@ packages:
     resolution: {integrity: sha512-HhmzZh5LSJNS5O8jQKpJ/3ZcrrlG6L70hpGqMIAoM9YVD0YBRNWYsfwcXq8VnSjlNpCpgLzMXdiPo+dxcvSmiA==}
     dependencies:
       undici-types: 5.26.5
+    dev: true
+
+  /@types/papaparse@5.3.14:
+    resolution: {integrity: sha512-LxJ4iEFcpqc6METwp9f6BV6VVc43m6MfH0VqFosHvrUgfXiFe6ww7R3itkOQ+TCK6Y+Iv/+RnnvtRZnkc5Kc9g==}
+    dependencies:
+      '@types/node': 20.9.1
     dev: true
 
   /@types/postcss-js@4.0.4:
@@ -2873,6 +2891,10 @@ packages:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
     dev: false
 
+  /papaparse@5.4.1:
+    resolution: {integrity: sha512-HipMsgJkZu8br23pW15uvo6sib6wne/4woLZPlFf3rpDyMe9ywEXUsuD7+6K9PRkJlVT51j/sCOYDKGGS3ZJrw==}
+    dev: false
+
   /parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
     engines: {node: '>=6'}
@@ -4049,3 +4071,11 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: true
+
+  /zod@3.22.4:
+    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+    dev: false
+
+  /zof@0.0.0:
+    resolution: {integrity: sha512-KtdXGKvAXxYvhOtEzJhHLz58xMGqftF/wMZzxD9UFpJ0UwqH/inO363SodxBmf2cHR3slL4n87QGgg+tF6P5Iw==}
+    dev: false

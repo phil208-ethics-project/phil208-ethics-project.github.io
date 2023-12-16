@@ -2,20 +2,7 @@ import { db } from '@db'
 
 import { saveAs } from 'file-saver'
 import JsZip from 'jszip'
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function getTableString(content: any[]) {
-  const columns = Object.keys(content[0])
-  const csvRows = [columns.join(',')]
-
-  for (const row of content) {
-    const rowArr = columns.map(col => row[col] || '')
-    const rowStr = rowArr.join(',')
-    csvRows.push(rowStr)
-  }
-
-  return csvRows.join('\n')
-}
+import { unparse } from 'papaparse'
 
 export default async function exportCsv(name?: string) {
   const zip = new JsZip()
@@ -27,7 +14,7 @@ export default async function exportCsv(name?: string) {
     const name = table.name
     if (content.length == 0) continue
 
-    const tableStr = await getTableString(content)
+    const tableStr = unparse(content)
     folder.file(`${name}.csv`, tableStr)
   }
   const blob = await zip.generateAsync({ type: 'blob' })

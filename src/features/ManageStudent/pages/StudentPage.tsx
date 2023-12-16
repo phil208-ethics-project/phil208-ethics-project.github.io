@@ -15,8 +15,8 @@ export default function StudentPage() {
   }
 
   const title = student
-    ? `${student.first_name} ${student.last_name} | CS 208 Ethics Project`
-    : 'CS 208 Ethics Project'
+    ? `${student.first_name} ${student.last_name} | PHIL 208 Ethics Project`
+    : 'PHIL 208 Ethics Project'
   useSetTitle(title)
 
   return (
