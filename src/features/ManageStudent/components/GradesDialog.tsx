@@ -1,6 +1,14 @@
 import Dialog from '@components/Dialog'
 import { SessionContext } from '@components/SessionContext'
-import { db, FictionalGrade, InformationalGrade, Student } from '@db'
+import {
+  db,
+  FictionalGrade,
+  InformationalGrade,
+  ReadingLevelGrade,
+  readingLevels,
+  SpellingGrade,
+  Student,
+} from '@db'
 
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
@@ -45,6 +53,39 @@ async function getInitalFictional(
   }
 }
 
+async function getInitalReadingLevel(
+  session_id: number,
+  student_id: number,
+): Promise<ReadingLevelGrade> {
+  const result = await db.reading_grades.get([session_id, student_id])
+  if (result) return result
+  return {
+    student_id,
+    session_id,
+    reading_level: '',
+  }
+}
+
+async function getInitialSpelling(
+  session_id: number,
+  student_id: number,
+): Promise<SpellingGrade> {
+  const result = await db.spelling_grades.get([session_id, student_id])
+  if (result) return result
+  return {
+    student_id,
+    session_id,
+    phonetic_short_vowels: false,
+    phonetic_consonant_blends: false,
+    phonetic_consonant_digraphs: false,
+    transitional_long_vowels: false,
+    transitional_complex_vowels: false,
+    fluent_inflectional_endings: false,
+    fluent_multisyllabic_words_2_syllabes: false,
+    advanced_multisyllabic_words_3_syllabes: false,
+  }
+}
+
 interface GradesDialogProps {
   isOpen: boolean
   student: Student | undefined
@@ -86,6 +127,21 @@ export default function GradesDialog({
         +fictionalGrades.v) ||
     0
 
+  const [spellingGrades, setSpellingGrades] = useState<SpellingGrade>()
+  const spellingSum =
+    (spellingGrades &&
+      +spellingGrades.phonetic_short_vowels +
+        +spellingGrades.phonetic_consonant_blends +
+        +spellingGrades.phonetic_consonant_digraphs +
+        +spellingGrades.transitional_long_vowels +
+        +spellingGrades.transitional_complex_vowels +
+        +spellingGrades.fluent_inflectional_endings +
+        +spellingGrades.fluent_multisyllabic_words_2_syllabes +
+        +spellingGrades.advanced_multisyllabic_words_3_syllabes) ||
+    0
+
+  const [readingLevelGrades, setReadingLevelGrades] =
+    useState<ReadingLevelGrade>()
   useEffect(() => {
     if (!isOpen) return
     const session_id = session ?? NaN
@@ -98,7 +154,13 @@ export default function GradesDialog({
     getInitalFictional(session_id, student.id).then(v => {
       setFictionalGrades(v)
     })
-  }, [isOpen])
+    getInitialSpelling(session_id, student.id).then(v => {
+      setSpellingGrades(v)
+    })
+    getInitalReadingLevel(session_id, student.id).then(v => {
+      setReadingLevelGrades(v)
+    })
+  }, [isOpen, navigate])
 
   return (
     <Dialog exit={exit} isOpen={isOpen}>
@@ -313,6 +375,175 @@ export default function GradesDialog({
             <td>{fictionalSum}</td>
           </tr>
         </tbody>
+        <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b border-gray-100'>
+          <tr>
+            <th className='px-2 py-3'></th>
+            <th className='px-2 py-3'>short vowels</th>
+            <th className='px-2 py-3'>consonant blends</th>
+            <th className='px-2 py-3'>consonant digraphs</th>
+            <th className='px-2 py-3'>long vowels</th>
+            <th className='px-2 py-3'>complex vowels</th>
+            <th className='px-2 py-3'>inflectional endings</th>
+            <th className='px-2 py-3'>two syllabes</th>
+            <th className='px-2 py-3'>three syllabes</th>
+            <th className='px-2 py-3'>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 dark:border-gray-700'>
+            <th className='px-2 py-3'>Spelling</th>
+
+            <td>
+              <input
+                checked={spellingGrades?.phonetic_short_vowels ?? false}
+                onChange={({ target }) =>
+                  setSpellingGrades(
+                    v => v && { ...v, phonetic_short_vowels: target.checked },
+                  )
+                }
+                type='checkbox'
+                className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+              />
+            </td>
+            <td>
+              <input
+                checked={spellingGrades?.phonetic_consonant_blends ?? false}
+                onChange={({ target }) =>
+                  setSpellingGrades(
+                    v =>
+                      v && { ...v, phonetic_consonant_blends: target.checked },
+                  )
+                }
+                type='checkbox'
+                className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+              />
+            </td>
+            <td>
+              <input
+                checked={spellingGrades?.phonetic_consonant_digraphs ?? false}
+                onChange={({ target }) =>
+                  setSpellingGrades(
+                    v =>
+                      v && {
+                        ...v,
+                        phonetic_consonant_digraphs: target.checked,
+                      },
+                  )
+                }
+                type='checkbox'
+                className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+              />
+            </td>
+            <td>
+              <input
+                checked={spellingGrades?.transitional_long_vowels ?? false}
+                onChange={({ target }) =>
+                  setSpellingGrades(
+                    v =>
+                      v && { ...v, transitional_long_vowels: target.checked },
+                  )
+                }
+                type='checkbox'
+                className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+              />
+            </td>
+            <td>
+              <input
+                checked={spellingGrades?.transitional_complex_vowels ?? false}
+                onChange={({ target }) =>
+                  setSpellingGrades(
+                    v =>
+                      v && {
+                        ...v,
+                        transitional_complex_vowels: target.checked,
+                      },
+                  )
+                }
+                type='checkbox'
+                className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+              />
+            </td>
+            <td>
+              <input
+                checked={spellingGrades?.fluent_inflectional_endings ?? false}
+                onChange={({ target }) =>
+                  setSpellingGrades(
+                    v =>
+                      v && {
+                        ...v,
+                        fluent_inflectional_endings: target.checked,
+                      },
+                  )
+                }
+                type='checkbox'
+                className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+              />
+            </td>
+            <td>
+              <input
+                checked={
+                  spellingGrades?.fluent_multisyllabic_words_2_syllabes ?? false
+                }
+                onChange={({ target }) =>
+                  setSpellingGrades(
+                    v =>
+                      v && {
+                        ...v,
+                        fluent_multisyllabic_words_2_syllabes: target.checked,
+                      },
+                  )
+                }
+                type='checkbox'
+                className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+              />
+            </td>
+            <td>
+              <input
+                checked={
+                  spellingGrades?.advanced_multisyllabic_words_3_syllabes ??
+                  false
+                }
+                onChange={({ target }) =>
+                  setSpellingGrades(
+                    v =>
+                      v && {
+                        ...v,
+                        advanced_multisyllabic_words_3_syllabes: target.checked,
+                      },
+                  )
+                }
+                type='checkbox'
+                className='w-6 h-6 m-2 rounded-md text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:emerald-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+              />
+            </td>
+            <td>{spellingSum}</td>
+          </tr>
+          <tr className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 dark:border-gray-700'>
+            <th className='px-2 py-3'>Reading</th>
+            <td>
+              <select
+                id={`readingLevelDropdown`}
+                value={readingLevelGrades?.reading_level || ''}
+                onChange={e =>
+                  setReadingLevelGrades(
+                    reading_level =>
+                      reading_level && {
+                        ...reading_level,
+                        reading_level: e.target.value,
+                      },
+                  )
+                }
+                className='m-2 rounded border-gray-300 focus:ring-emerald-500  focus:ring-2 focus:border-transparent bg-gray-100'
+              >
+                {readingLevels.map((level, index) => (
+                  <option key={index} value={level}>
+                    {level}
+                  </option>
+                ))}
+              </select>
+            </td>
+          </tr>
+        </tbody>
       </table>
       <button
         className='border-2 rounded p-2 hover:bg-gray-100 transition-colors text-xs text-gray-700 uppercase font-bold m-2'
@@ -320,6 +551,8 @@ export default function GradesDialog({
           informationalGrades &&
             db.informational_grades.put(informationalGrades)
           fictionalGrades && db.fictional_grades.put(fictionalGrades)
+          spellingGrades && db.spelling_grades.put(spellingGrades)
+          readingLevelGrades && db.reading_grades.put(readingLevelGrades)
           exit()
         }}
       >

@@ -1,3 +1,5 @@
+// StudentDashboard.tsx
+
 import NewStudentForm from '../components/NewStudentForm'
 import StudentTable from '../components/StudentTable'
 
@@ -15,6 +17,7 @@ import { readZip } from '@features/SaveData/lib/readFile'
 import useSetTitle from '@hooks/useSetTitle'
 
 import { parse } from 'papaparse'
+import { Link } from 'react-router-dom'
 import { z } from 'zod'
 
 async function onUpload(files: FileList) {
@@ -91,12 +94,9 @@ async function onUpload(files: FileList) {
   }
 }
 
-export default function StudentDastboard() {
+export default function StudentDashboard() {
   useSetTitle('Students | PHIL 208 Ethics Project')
 
-  // const onUpload = (file: any) => {  // Dummy place holder
-  //   console.log('Uploaded files:', file);
-  // };
   return (
     <div className='flex flex-col space-y-5'>
       <div className='m-6'>
@@ -119,6 +119,13 @@ export default function StudentDastboard() {
           </div>
         </div>
       </div>
+
+      {/* Button to navigate to StudentBigTable */}
+      <Link to='/students'>
+        <button className='bg-blue-500 text-white px-4 py-2 mt-4'>
+          Go to Student Table
+        </button>
+      </Link>
     </div>
   )
 }

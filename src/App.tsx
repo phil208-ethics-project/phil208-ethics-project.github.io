@@ -8,6 +8,7 @@ import { Outlet, Route, Routes } from 'react-router-dom'
 
 const StudentDastboard = lazy(() => import('@features/StudentDashboard'))
 const StudentPage = lazy(() => import('@features/ManageStudent'))
+const StudentBigTable = lazy(() => import('@features/StudentBigTable'))
 
 async function preloadPages() {
   await import('@features/StudentDashboard')
@@ -35,6 +36,7 @@ function App() {
         >
           <Route index element={<HomePage />} />
           <Route path='student-dashboard' element={<StudentDastboard />} />
+          <Route path='students' element={<StudentBigTable />} />
           <Route path='student/:id' element={<StudentPage />} />
           <Route path='*' element={<NotFound />} />
         </Route>
