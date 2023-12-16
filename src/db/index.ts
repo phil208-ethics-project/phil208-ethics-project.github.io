@@ -7,9 +7,23 @@ export interface Session {
   name?: string
 }
 
-const boolSchema = z
-  .union([z.boolean(), z.enum(['true', 'false'])])
-  .transform(value => value === 'true' || value === true)
+export const boolSchema = z.string().transform<boolean>((value, ctx) => {
+  const char = value.toLowerCase().charAt(0)
+  switch (char) {
+    case 't':
+      return true
+    case 'f':
+      return false
+    default:
+      ctx.addIssue({
+        code: z.ZodIssueCode.invalid_type,
+        expected: z.ZodParsedType.boolean,
+        received: z.ZodParsedType.string,
+        message: `Expected "true" or "false", recieved ${value}`,
+      })
+      return false
+  }
+})
 
 export const studentSchema = z.object({
   id: z.coerce.number().optional(),
